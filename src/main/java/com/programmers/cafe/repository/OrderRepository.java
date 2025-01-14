@@ -1,6 +1,6 @@
 package com.programmers.cafe.repository;
 
-import org.springframework.core.annotation.Order;
+import com.programmers.cafe.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
