@@ -3,6 +3,7 @@ package com.programmers.cafe.controller;
 import com.programmers.cafe.dto.ProductRequestDto;
 import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDto> updateProduct(
         @PathVariable Long id,
-        @RequestBody ProductRequestDto requestDto
+        @RequestBody @Valid ProductRequestDto requestDto
     ) {
         ProductResponseDto responseDto = productService.updateProduct(id, requestDto);
         return ResponseEntity.ok(responseDto);
