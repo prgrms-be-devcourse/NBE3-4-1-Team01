@@ -1,11 +1,15 @@
 package com.programmers.cafe.controller;
 
+import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -14,8 +18,10 @@ public class OrderCheckController {
     private final OrderService orderService;
 
     @GetMapping
-    @ResponseBody
-    public String check() {
-        return "orderCheck";
+    public String check(Model model) {
+        List<Order> orders = orderService.findAll();
+        model.addAttribute("orders", orders);
+
+        return "order_check";
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 조회</title>
+</head>
+<body>
+<h1>주문 조회</h1>
+<br>
+
+<table>
+    <thead>
+    <tr>
+        <th>주문번호</th>
+        <th>주문일시</th>
+        <th>이메일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.getDeliveryId()}"></td>
+        <td th:text="${order.getCreatedAt()}"></td>
+        <td th:text="${order.getEmail()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

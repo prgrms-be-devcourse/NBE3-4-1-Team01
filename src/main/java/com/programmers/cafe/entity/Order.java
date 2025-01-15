@@ -1,6 +1,7 @@
 package com.programmers.cafe.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "`order`")
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 public class Order {
     @Id
