@@ -2,12 +2,14 @@ package com.programmers.cafe.entity;
 
 import com.programmers.cafe.dto.ProductRequestDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +37,3 @@ public class Product {
         this.filePath = requestDto.getFilePath();
     }
 }
-

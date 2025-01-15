@@ -1,15 +1,20 @@
 package com.programmers.cafe.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "`order`")
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "`order`")
 @EntityListeners(AuditingEntityListener.class)
 public class Order {
     @Id
@@ -29,4 +34,7 @@ public class Order {
     private String postalCode;
 
     private int status; // 0: 주문완료, 1: 배송중
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ProductOrder> productOrders;
 }
