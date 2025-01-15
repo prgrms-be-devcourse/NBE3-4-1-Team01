@@ -34,7 +34,7 @@
     <tbody>
     <tr th:each="order, orderStat : ${orders}">
         <td th:text="${order.getDeliveryId()}"></td>
-        <td th:text="${order.getCreatedAt()}"></td>
+        <td th:text="${#temporals.format(order.getCreatedAt(), 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
         <td th:text="${order.getEmail()}"></td>
         <td style="text-align: center;">
             <span th:text="${(orderStat.index % 2 == 0) ? '배송중' : '배송준비중'}"></span>
