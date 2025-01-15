@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class OrderCheckController {
     private final OrderService orderService;
 
     @GetMapping
-    public String check(Model model) {
+    public String check(Model model) { // 주문 목록 최초 화면
         List<Order> orders = orderService.findAll();
         model.addAttribute("orders", orders);
 
@@ -28,6 +27,11 @@ public class OrderCheckController {
 
     @GetMapping("/search-by-email")
     public String searchByEmail(@RequestParam String email, Model model) {
+        // email이 비어있으면 최초 화면으로 리다이렉트
+        if (email == null || email.trim().isEmpty()) {
+            return "redirect:/order";
+        }
+
         List<Order> orders = orderService.findByEmail(email);
         model.addAttribute("orders", orders);
         return "order_check";
