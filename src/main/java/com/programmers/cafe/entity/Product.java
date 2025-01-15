@@ -1,5 +1,6 @@
 package com.programmers.cafe.entity;
 
+import com.programmers.cafe.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,4 +24,9 @@ public class Product {
     // TODO: 정적 파일(사진) 추가 후 경로 등록
     @Column
     private String filePath;
+
+    public void update(ProductRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.price = requestDto.getPrice();
+    }
 }
