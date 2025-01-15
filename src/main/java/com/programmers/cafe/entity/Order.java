@@ -24,4 +24,12 @@ public class Order {
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "TEXT")
+    private String address;
+
+    @Column(length = 10)
+    private String postalCode;
+
+    private int status; // 0: 주문완료, 1: 배송중, 2: 배송완료
 }
