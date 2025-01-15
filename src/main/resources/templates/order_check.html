@@ -5,16 +5,21 @@
     <title>주문 조회</title>
 </head>
 <body>
-<h1>주문 조회</h1>
+<h1>주문 목록</h1>
 
 <form>
     <label for="deliveryStatus">배송 여부:</label>
     <select id="deliveryStatus" name="deliveryStatus">
-        <option value="choose" selected>선택</option>
+        <option value="choose" selected>모두</option>
         <option value="pending">배송 예정</option>
         <option value="shipped">배송 완료</option>
         <option value="cancelled">배송 취소</option>
     </select>
+</form>
+<br>
+<form>
+    <input type="text" name="email" placeholder="이메일 검색">
+    <input type="submit" value="검색">
 </form>
 <br>
 
@@ -24,21 +29,30 @@
         <th>주문번호</th>
         <th>주문일시</th>
         <th>이메일</th>
+        <th>배송상태</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="order : ${orders}">
+    <tr th:each="order, orderStat : ${orders}">
         <td th:text="${order.getDeliveryId()}"></td>
         <td th:text="${order.getCreatedAt()}"></td>
         <td th:text="${order.getEmail()}"></td>
+        <td style="text-align: center;">
+            <span th:text="${(orderStat.index % 2 == 0) ? '배송중' : '배송준비중'}"></span>
+        </td>
+
         <td>
             <!-- 수정 버튼 (수정 페이지로 이동) -->
             <form th:action="@{/order/edit/{id}(id=${order.getDeliveryId()})}" method="get" style="display:inline;">
-                <button type="submit" class="btn btn-primary" style="margin-right: 10px;">수정</button>
+                <button type="submit" class="btn btn-primary" style="margin-right: 10px;"
+                        th:onclick="|if (${orderStat.index} % 2 == 0)
+                        {alert('배송중인 주문은 수정할 수 없습니다.'); return false;} else {return true;}|">
+                    수정
+                </button>
             </form>
             <!-- 삭제 버튼 (삭제 요청을 처리하는 URL로 이동) -->
             <form th:action="@{/order/delete/{id}(id=${order.getDeliveryId()})}" method="post" style="display:inline;">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                <button type="submit" class="btn btn-danger" onclick="return confirm('주문을 취소하시겠습니까?');">삭제</button>
             </form>
         </td>
     </tr>
