@@ -24,11 +24,9 @@ public class ProductOrder {
 
     private Integer amount;
 
-    private Integer totalPrice;
-
-    @PrePersist
     @PreUpdate
-    public void calculateTotalPrice() {
-        this.totalPrice = product.getPrice() * amount;
+    @PostPersist
+    public void updateOrderTotalPrice() {
+        this.order.calculateTotalPrice();
     }
 }

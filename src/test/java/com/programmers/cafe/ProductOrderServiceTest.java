@@ -71,6 +71,7 @@ public class ProductOrderServiceTest {
         assertThat(order.getEmail()).isEqualTo("email@email.com");
         assertThat(order.getCreatedAt()).isEqualTo(LocalDateTime.of(2025, 1, 1, 0, 0));
         assertThat(order.getProductOrders()).hasSize(2);
+        assertThat(order.getTotalPrice()).isEqualTo(8000);
     }
 
     @Test
@@ -86,5 +87,6 @@ public class ProductOrderServiceTest {
 
         assertThat(productOrder1.getAmount()).isEqualTo(2);
         assertThat(productOrder2.getAmount()).isEqualTo(3);
+        assertThat(order.getTotalPrice()).isEqualTo(19000);
     }
 }

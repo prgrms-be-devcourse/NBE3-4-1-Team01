@@ -37,4 +37,19 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProductOrder> productOrders;
+
+    private String address;
+
+    private String postCode;
+
+    private Integer totalPrice;
+
+    @PrePersist
+    @PreUpdate
+    public void calculateTotalPrice() {
+        this.totalPrice = productOrders
+                .stream()
+                .mapToInt(productOrder -> productOrder.getProduct().getPrice() * productOrder.getAmount())
+                .sum();
+    }
 }
