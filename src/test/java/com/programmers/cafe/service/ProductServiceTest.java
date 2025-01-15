@@ -50,4 +50,17 @@ class ProductServiceTest {
         assertThat(savedProduct.getName()).isEqualTo("new_name");
         assertThat(savedProduct.getPrice()).isEqualTo(20000);
     }
+
+    @Test
+    @DisplayName("id에 해당하는 상품이 존재하지 않는 경우 실패")
+    public void update_product_not_exist() {
+        // given
+        ProductRequestDto requestDto = new ProductRequestDto("new_name", 20000, "path/name.png");
+
+        Long productId = product.getId();
+        productRepository.deleteById(product.getId());
+
+        assertThrows(IllegalArgumentException.class,
+            () -> productService.updateProduct(productId, requestDto));
+    }
 }
