@@ -16,7 +16,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order findByEmail(String email) {
-        return orderRepository.findByEmail(email);
+    public List<Order> findByEmail(String email) {
+        if (email.isBlank())
+            return this.findAll();
+        else
+            return orderRepository.findByEmail(email);
     }
 }
