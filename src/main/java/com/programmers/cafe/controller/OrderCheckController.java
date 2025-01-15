@@ -32,6 +32,7 @@ public class OrderCheckController {
 
         List<Order> orders = orderService.findByEmail(email);
         model.addAttribute("orders", orders);
+        model.addAttribute("searchEmail", email); // 검색한 이메일 주소를 화면에 표시
         return "order_check";
     }
 

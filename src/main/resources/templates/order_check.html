@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div style="margin: 25px 15px;">
+<div style="margin: 25px 20px;">
     <h1>주문 목록</h1>
     <div style="display: flex; align-items: center; gap: 20px; margin: 20px 0;">
         <form th:action="@{/order/status}">
@@ -20,7 +20,7 @@
         </form>
 
         <form th:action="@{/order/search-by-email}">
-            <input type="text" name="email" placeholder="이메일 검색">
+            <input type="text" name="email" placeholder="이메일 검색" th:value="${searchEmail}" style="width: 220px;">
             <input type="submit" value="검색">
         </form>
     </div>
@@ -31,17 +31,21 @@
             <th>주문번호</th>
             <th>주문일시</th>
             <th>이메일</th>
+            <th>주소</th>
+            <th>우편번호</th>
             <th>배송상태</th>
             <th>관리</th>
         </tr>
         </thead>
         <tbody style="text-align: center; vertical-align: middle;">
-        <tr th:each="order, orderStat : ${orders}">
+        <tr th:each="order : ${orders}">
             <td th:text="${order.getDeliveryId()}"></td>
             <td th:text="${#temporals.format(order.getCreatedAt(), 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
             <td th:text="${order.getEmail()}"></td>
+            <td th:text="${order.getAddress()}"></td>
+            <td th:text="${order.getPostalCode()}"></td>
             <td style="text-align: center;">
-                <span th:text="${(orderStat.index % 2 == 0) ? '배송중' : '배송준비중'}"></span>
+                <span th:text="${(order.getStatus() % 2 == 1) ? '배송중' : '배송준비중'}"></span>
             </td>
 
             <td>
