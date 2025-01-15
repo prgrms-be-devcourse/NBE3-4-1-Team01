@@ -22,4 +22,8 @@ public class OrderService {
         else
             return orderRepository.findByEmail(email);
     }
+
+    public void deleteById(long id) {
+        orderRepository.deleteById(id);
+    }
 }

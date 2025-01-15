@@ -42,7 +42,7 @@
 
         <td>
             <!-- 수정 버튼 (수정 페이지로 이동) -->
-            <form th:action="@{/order/edit/{id}(id=${order.getDeliveryId()})}" method="get" style="display:inline;">
+            <form th:action="@{|/order/edit/${order.getId()}|}" method="get" style="display:inline;">
                 <button type="submit" class="btn btn-primary" style="margin-right: 10px;"
                         th:onclick="|if (${orderStat.index} % 2 == 0)
                         {alert('배송중인 주문은 수정할 수 없습니다.'); return false;} else {return true;}|">
@@ -50,8 +50,8 @@
                 </button>
             </form>
             <!-- 삭제 버튼 (삭제 요청을 처리하는 URL로 이동) -->
-            <form th:action="@{/order/delete/{id}(id=${order.getDeliveryId()})}" method="post" style="display:inline;">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('주문을 취소하시겠습니까?');">삭제</button>
+            <form th:action="@{|/order/delete/${order.getId()}|}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('주문을 취소하시겠습니까?');">취소</button>
             </form>
         </td>
     </tr>

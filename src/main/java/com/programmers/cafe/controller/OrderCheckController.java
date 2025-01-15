@@ -5,9 +5,7 @@ import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +33,11 @@ public class OrderCheckController {
         List<Order> orders = orderService.findByEmail(email);
         model.addAttribute("orders", orders);
         return "order_check";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable long id) { // 주문 삭제
+        orderService.deleteById(id);
+        return "redirect:/order";
     }
 }
