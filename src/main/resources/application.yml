@@ -3,12 +3,11 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/cafeapp?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/cafeapp?serverTimezone=Asia/Seoul
     username: root
     password: '0000'
 
-    password: 1234
-  jpa:
+jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
