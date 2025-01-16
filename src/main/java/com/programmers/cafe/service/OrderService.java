@@ -1,5 +1,6 @@
 package com.programmers.cafe.service;
 
+import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,14 +8,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<OrderDto> findAll() {
+        return orderRepository
+                .findAll()
+                .stream()
+                .map(OrderDto::new)
+                .collect(Collectors.toList());
     }
 
     public void deleteById(long id) {

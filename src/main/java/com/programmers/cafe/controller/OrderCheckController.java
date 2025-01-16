@@ -1,5 +1,6 @@
 package com.programmers.cafe.controller;
 
+import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class OrderCheckController {
 
     @GetMapping
     public String check(Model model) { // 주문 목록 최초 화면
-        List<Order> orders = orderService.findAll();
+        List<OrderDto> orders = orderService.findAll();
         model.addAttribute("orders", orders);
 
         return "order_check";
