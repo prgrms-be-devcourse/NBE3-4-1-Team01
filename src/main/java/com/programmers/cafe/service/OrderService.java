@@ -27,7 +27,7 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public List<Order> getOrderByFilters(int deliveryStatus, String email) {
+    public List<OrderDto> getOrderByFilters(int deliveryStatus, String email) {
         List<Order> orders;
 
         if (deliveryStatus == 2 && (email == null || email.isEmpty())) {
@@ -43,7 +43,7 @@ public class OrderService {
             orders = orderRepository.findByStatusAndEmail(deliveryStatus, email);
         }
 
-        return orders;
+        return orders.stream().map(OrderDto::new).collect(Collectors.toList());
     }
 
     public Order findById(long id) {

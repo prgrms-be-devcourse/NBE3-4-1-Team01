@@ -26,7 +26,7 @@ public class OrderCheckController {
 
     @GetMapping("/filter")
     public String filter(@RequestParam int deliveryStatus, @RequestParam String email, Model model) { // 주문 필터
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email);
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email);
 
         if (orders == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
             return "redirect:/order";
