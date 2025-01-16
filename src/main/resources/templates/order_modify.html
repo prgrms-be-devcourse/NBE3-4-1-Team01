@@ -5,36 +5,48 @@
     <title>Title</title>
 </head>
 <body>
-<h2>주문서 수정</h2>
-<h3>주소</h3>
-<form th:action="@{|/order/modify/${order.id}|}" th:object="${order}" method="post">
-    <div>
-        <label for="address">주소</label>
-        <input type="text" th:field="*{address}" id="address" />
-    </div>
-    <div>
-        <label for="postCode">우편번호</label>
-        <input type="text" th:field="*{postCode}" id="postCode" />
-    </div>
-
-    <div th:each="productOrder, iter : ${order.productOrders}">
-        <h3>상품: <span th:text="${productOrder.product.name}"></span></h3>
-        <div>
-            <label for="productOrders[__${iter.index}__].amount">수량</label>
-            <select th:field="*{productOrders[__${iter.index}__].amount}" id="productOrders[__${iter.index}__].amount">
-                <option th:each="i : ${#numbers.sequence(1, 10)}"
-                        th:value="${i}"
-                        th:text="${i}"
-                        th:selected="${i == productOrder.amount}"></option>
-            </select>
+<div style="margin: 25px 20px;">
+    <h2>주문서 수정</h2>
+    <h3>주소 수정</h3>
+    <form th:action="@{|/order/modify/${order.id}|}" th:object="${order}" method="post">
+        <div style="margin-bottom: 20px;">
+            <label for="address" style="font-weight: bold;">주소</label>
+            <input type="text" th:field="*{address}" id="address" placeholder="주소를 입력하세요"
+                   style="width: auto; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
-        <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" />
-        <input type="hidden" th:field="*{productOrders[__${iter.index}__].product}" />
-        <input type="hidden" th:field="*{productOrders[__${iter.index}__].order}" />
-    </div>
-    <input type="hidden" th:field="*{email}" id="email" />
-    <input type="hidden" th:field="*{createdAt}" id="createdAt" />
-    <button type="submit">수정 완료</button>
-</form>
+
+        <div style="margin-bottom: 20px;">
+            <label for="postCode" style="font-weight: bold;">우편번호</label>
+            <input type="text" th:field="*{postalCode}" id="postCode" placeholder="우편번호를 입력하세요"
+                   style="width: auto; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+
+        <h3>상품 정보</h3>
+        <div th:each="productOrder, iter : ${order.productOrders}">
+            <div style="margin-bottom: 20px;">
+                <h4>상품: <span th:text="${productOrder.product.name}"></span></h4>
+                <div>
+                    <label for="productOrders[__${iter.index}__].amount" style="font-weight: bold;">수량</label>
+                    <select th:field="*{productOrders[__${iter.index}__].amount}" id="productOrders[__${iter.index}__].amount"
+                            style="padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; width: auto;">
+                        <option th:each="i : ${#numbers.sequence(1, 10)}"
+                                th:value="${i}" th:text="${i}" th:selected="${i == productOrder.amount}"></option>
+                    </select>
+                </div>
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" />
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].product}" />
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].order}" />
+            </div>
+        </div>
+
+        <input type="hidden" th:field="*{email}" id="email" />
+        <input type="hidden" th:field="*{createdAt}" id="createdAt" />
+
+        <button type="submit"
+                style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            수정 완료
+        </button>
+    </form>
+</div>
 </body>
 </html>

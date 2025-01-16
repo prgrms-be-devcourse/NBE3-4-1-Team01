@@ -38,8 +38,6 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<ProductOrder> productOrders;
 
-    private String postCode;
-
     private Integer totalPrice;
 
     @PrePersist
