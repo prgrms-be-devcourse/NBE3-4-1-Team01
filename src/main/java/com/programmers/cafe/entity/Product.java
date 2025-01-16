@@ -1,13 +1,6 @@
 package com.programmers.cafe.entity;
 
-전체상품조회
 import jakarta.persistence.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-main
 import lombok.Getter;
 
 @Entity
@@ -15,7 +8,6 @@ import lombok.Getter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -26,7 +18,7 @@ public class Product {
 
     // TODO: 정적 파일(사진) 추가 후 경로 등록
     @Column
-    private String filePath
+    private String filePath;
 
     public Product(String name, int price, String filePath) {
         this.name = name;
@@ -36,7 +28,5 @@ public class Product {
 
     public Product() {
     }
-}
-
 }
 

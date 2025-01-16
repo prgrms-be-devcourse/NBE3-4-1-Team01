@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 class ProductServiceTest {
@@ -60,6 +61,18 @@ class ProductServiceTest {
 
         //then
         assertThat(testproduct).isEqualTo(fakeProduct);
+    }
+    @Test
+    @DisplayName("예외 테스트")
+    void 개별_상품_조회_예외상황(){
+        //given
+        Product fakeProduct = new Product("브라질 원두", 5000, "qwe.jpg");
+        when(productRepository.findById(1L)).thenReturn(Optional.empty());
+
+        //when
+
+        //then
+        assertThrows(DataNotFoundException.class, () -> {productService.getProduct(1L); });
     }
 
 }
