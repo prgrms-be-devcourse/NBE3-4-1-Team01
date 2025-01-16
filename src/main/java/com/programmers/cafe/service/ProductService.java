@@ -4,7 +4,6 @@ import com.programmers.cafe.dto.ProductRequestDto;
 import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
