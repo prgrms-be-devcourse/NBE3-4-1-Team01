@@ -27,14 +27,22 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public List<Order> findByStatus(int status) {
-        return orderRepository.findByStatus(status);
-    }
+    public List<Order> getOrderByFilters(int deliveryStatus, String email) {
+        List<Order> orders;
 
-    public List<Order> findByStatusAndEmail(int status, String email) {
-        if (email.isBlank())
-            return this.findByStatus(status);
-        else
-            return orderRepository.findByStatusAndEmail(status, email);
+        if (deliveryStatus == 2 && (email == null || email.isEmpty())) {
+            return null;
+        } else if (deliveryStatus == 2) {
+            // "모두" 선택 및 이메일 필터만 적용
+            orders = orderRepository.findByEmail(email);
+        } else if (email == null || email.isEmpty()) {
+            // 배송 상태 필터만 적용
+            orders = orderRepository.findByStatus(deliveryStatus);
+        } else {
+            // 배송 상태와 이메일 모두 필터 적용
+            orders = orderRepository.findByStatusAndEmail(deliveryStatus, email);
+        }
+
+        return orders;
     }
 }

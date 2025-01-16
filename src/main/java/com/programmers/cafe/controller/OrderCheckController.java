@@ -38,20 +38,10 @@ public class OrderCheckController {
 
     @GetMapping("/filter")
     public String filter(@RequestParam int deliveryStatus, @RequestParam String email, Model model) { // 주문 필터
-        List<Order> orders;
+        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email);
 
-        if (deliveryStatus == 2 && (email == null || email.isEmpty())) {
-            // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
+        if (orders == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
             return "redirect:/order";
-        } else if (deliveryStatus == 2) {
-            // "모두" 선택 및 이메일 필터만 적용
-            orders = orderService.findByEmail(email);
-        } else if (email == null || email.isEmpty()) {
-            // 배송 상태 필터만 적용
-            orders = orderService.findByStatus(deliveryStatus);
-        } else {
-            // 배송 상태와 이메일 모두 필터 적용
-            orders = orderService.findByStatusAndEmail(deliveryStatus, email);
         }
 
         model.addAttribute("orders", orders);
