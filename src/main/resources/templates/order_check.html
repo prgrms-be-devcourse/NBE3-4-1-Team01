@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 조회</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+</head>
+<body>
+
+<div style="margin: 25px 20px;">
+    <h1>주문 목록</h1>
+    <div style="margin: 20px 0;">
+        <form th:action="@{/order/filter}">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <label for="deliveryStatus">배송 여부:</label>
+                <select id="deliveryStatus" name="deliveryStatus">
+                    <option value="2" th:selected="${selectedStatus == 2}">모두</option>
+                    <option value="0" th:selected="${selectedStatus == 0}">배송준비중</option>
+                    <option value="1" th:selected="${selectedStatus == 1}">배송중</option>
+                </select>
+                <br>
+                <!-- 이메일 검색 -->
+                <input type="text" name="email" placeholder="이메일 검색" th:value="${searchEmail}" style="width: 220px;">
+                <!-- 검색 버튼 -->
+                <button type="submit">검색</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead class="table-bordered" style="text-align: center;">
+        <tr>
+            <th>주문번호</th>
+            <th>주문일시</th>
+            <th>이메일</th>
+            <th>주소</th>
+            <th>우편번호</th>
+            <th>배송상태</th>
+            <th>관리</th>
+        </tr>
+        </thead>
+        <tbody style="text-align: center; vertical-align: middle;">
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.getId()}"></td>
+            <td th:text="${#temporals.format(order.getCreatedAt(), 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
+            <td th:text="${order.getEmail()}"></td>
+            <td th:text="${order.getAddress()}"></td>
+            <td th:text="${order.getPostalCode()}"></td>
+            <td style="text-align: center;">
+                <span th:text="${(order.getStatus() % 2 == 1) ? '배송중' : '배송준비중'}"></span>
+            </td>
+
+            <td>
+                <!-- 수정 버튼 (수정 페이지로 이동) -->
+                <form th:action="@{|/order/edit/${order.getId()}|}" method="get" style="display:inline;">
+                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;"
+                            th:onclick="|if (${order.getStatus()} == 1)
+                        {alert('배송중인 주문은 수정할 수 없습니다.'); return false;} else {return true;}|">
+                        수정
+                    </button>
+                </form>
+                <!-- 삭제 버튼 (삭제 요청을 처리하는 URL로 이동) -->
+                <form th:action="@{|/order/delete/${order.getId()}|}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('주문을 취소하시겠습니까?');">취소</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
