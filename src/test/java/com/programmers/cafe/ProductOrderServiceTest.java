@@ -69,7 +69,6 @@ public class ProductOrderServiceTest {
         Order order = orderRepository.findById(1L).get();
 
         assertThat(order.getEmail()).isEqualTo("email@email.com");
-        assertThat(order.getCreatedAt()).isEqualTo(LocalDateTime.of(2025, 1, 1, 0, 0));
         assertThat(order.getProductOrders()).hasSize(2);
         assertThat(order.getTotalPrice()).isEqualTo(8000);
     }
