@@ -6,6 +6,9 @@ import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.exception.DataNotFoundException;
 import com.programmers.cafe.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +30,13 @@ public class ProductService {
         return ProductResponseDto.of(product);
     }
     @Transactional(readOnly = true)
+    public Page<Product> getList(int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return productRepository.findAll(pageable);
+    }
+    @Transactional(readOnly = true)
     public List<Product> getList() {
-        List<Product> productList = productRepository.findAll();
-        if (productList.isEmpty()) {
-            System.out.println("상품이 없습니다.");
-        }
-        return productList;
+        return productRepository.findAll();
     }
     @Transactional(readOnly = true)
     public Product getProduct(Long id) {

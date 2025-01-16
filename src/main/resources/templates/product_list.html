@@ -60,8 +60,8 @@
 
         /* 각 상품들의 칸 폭을 넓히고 높이를 조정하는 스타일 */
         .product td {
-            width: 400px; /* 원하는 폭으로 조정 */
-            height: 100px; /* 원하는 높이로 조정 */
+            width: 300px; /* 원하는 폭으로 조정 */
+            height: 200px; /* 원하는 높이로 조정 */
         }
 
         /* 테이블을 화면 가운데에 두는 스타일 */
@@ -78,9 +78,10 @@
     </thead>
     <tbody>
     <tr th:each="product : ${productList}" class="product">
+        <td th:text="${product.getId()}"></td>
         <td th:text="${product.getFilePath()}"></td>
         <td th:text="${product.getName()}"></td>
-        <td th:text="${product.getPrice()}"></td>
+        <td th:text="${product.getPrice()} + '원'"></td>
     </tr>
     </tbody>
 </table>
