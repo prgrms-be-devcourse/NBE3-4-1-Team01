@@ -7,7 +7,7 @@
 <body>
 <h2>주문서 수정</h2>
 <h3>주소</h3>
-<form th:action="@{|/orders/modify/${order.id}|}" th:object="${order}" method="post">
+<form th:action="@{|/order/modify/${order.id}|}" th:object="${order}" method="post">
     <div>
         <label for="address">주소</label>
         <input type="text" th:field="*{address}" id="address" />
@@ -29,7 +29,11 @@
             </select>
         </div>
         <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" />
+        <input type="hidden" th:field="*{productOrders[__${iter.index}__].product}" />
+        <input type="hidden" th:field="*{productOrders[__${iter.index}__].order}" />
     </div>
+    <input type="hidden" th:field="*{email}" id="email" />
+    <input type="hidden" th:field="*{createdAt}" id="createdAt" />
     <button type="submit">수정 완료</button>
 </form>
 </body>
