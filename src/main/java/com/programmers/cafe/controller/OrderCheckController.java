@@ -47,7 +47,7 @@ public class OrderCheckController {
 
     @GetMapping("/modify/{id}")
     public String modify(@PathVariable long id, Model model) {
-        Order order = orderService.findById(id);
+        OrderDto order = orderService.findById(id);
         model.addAttribute("order", order);
 
         return "order_modify";

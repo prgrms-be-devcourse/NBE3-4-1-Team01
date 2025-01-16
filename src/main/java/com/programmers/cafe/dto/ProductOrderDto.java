@@ -19,7 +19,7 @@ public class ProductOrderDto {
 
     public ProductOrderDto(ProductOrder productOrder) {
         Product product = productOrder.getProduct();
-        this.id = product.getId();
+        this.id = productOrder.getId();
         this.name = product.getName();
         this.price = product.getPrice();
         this.amount = productOrder.getAmount();

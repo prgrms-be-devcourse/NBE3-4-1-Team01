@@ -16,15 +16,15 @@
         </div>
 
         <div style="margin-bottom: 20px;">
-            <label for="postCode" style="font-weight: bold;">우편번호</label>
-            <input type="text" th:field="*{postalCode}" id="postCode" placeholder="우편번호를 입력하세요"
+            <label for="postalCode" style="font-weight: bold;">우편번호</label>
+            <input type="text" th:field="*{postalCode}" id="postalCode" placeholder="우편번호를 입력하세요"
                    style="width: auto; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
 
         <h3>상품 정보</h3>
         <div th:each="productOrder, iter : ${order.productOrders}">
             <div style="margin-bottom: 20px;">
-                <h4>상품: <span th:text="${productOrder.product.name}"></span></h4>
+                <h4>상품: <span th:text="${productOrder.name}"></span></h4>
                 <div>
                     <label for="productOrders[__${iter.index}__].amount" style="font-weight: bold;">수량</label>
                     <select th:field="*{productOrders[__${iter.index}__].amount}" id="productOrders[__${iter.index}__].amount"
@@ -34,8 +34,6 @@
                     </select>
                 </div>
                 <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" />
-                <input type="hidden" th:field="*{productOrders[__${iter.index}__].product}" />
-                <input type="hidden" th:field="*{productOrders[__${iter.index}__].order}" />
             </div>
         </div>
 

@@ -46,10 +46,12 @@ public class OrderService {
         return orders.stream().map(OrderDto::new).collect(Collectors.toList());
     }
 
-    public Order findById(long id) {
-        return orderRepository
+    public OrderDto findById(long id) {
+        Order order = orderRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException("주문 항목을 찾을 수 없습니다."));
+
+        return new OrderDto(order);
     }
 
     public void modifyOrders(Order order) {
