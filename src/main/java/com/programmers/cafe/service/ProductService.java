@@ -5,6 +5,7 @@ import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.exception.DataNotFoundException;
 import com.programmers.cafe.repository.ProductRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,5 +54,14 @@ public class ProductService {
 
         productRepository.delete(product);
         return responseDto;
+    }
+
+    public void create(ProductRequestDto productRequestDto) {
+        Product product = new Product();
+        product.setName(productRequestDto.getName());
+        product.setPrice(productRequestDto.getPrice());
+        product.setFilePath(productRequestDto.getFilePath());
+
+        productRepository.save(product);
     }
 }

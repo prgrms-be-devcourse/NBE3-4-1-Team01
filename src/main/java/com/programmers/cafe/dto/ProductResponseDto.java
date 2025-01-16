@@ -1,7 +1,9 @@
 package com.programmers.cafe.dto;
 
 import com.programmers.cafe.entity.Product;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
