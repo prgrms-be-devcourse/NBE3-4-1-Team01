@@ -26,7 +26,7 @@ public class ProductService {
         product.update(requestDto);
         return ProductResponseDto.of(product);
     }
-
+    @Transactional(readOnly = true)
     public List<Product> getList() {
         List<Product> productList = productRepository.findAll();
         if (productList.isEmpty()) {
@@ -34,7 +34,7 @@ public class ProductService {
         }
         return productList;
     }
-
+    @Transactional(readOnly = true)
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
         if (product.isPresent()) {
