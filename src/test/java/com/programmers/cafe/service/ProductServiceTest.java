@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,6 +47,19 @@ class ProductServiceTest {
         assertThat(testList.get(1).getName()).isEqualTo(fakeList.get(1).getName());
         assertThat(testList.get(0).getPrice()).isEqualTo(fakeList.get(0).getPrice());
         assertThat(testList.get(1).getPrice()).isEqualTo(fakeList.get(1).getPrice());
+    }
+    @Test
+    @DisplayName("성공 테스트")
+    void 개별_상품_조회(){
+        //given
+        Product fakeProduct = new Product("브라질 원두", 5000, "qwe.jpg");
+        when(productRepository.findById(1L)).thenReturn(Optional.of(fakeProduct));
+
+        //when
+        Product testproduct = productService.getProduct(1L);
+
+        //then
+        assertThat(testproduct).isEqualTo(fakeProduct);
     }
 
 }

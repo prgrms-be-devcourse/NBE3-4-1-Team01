@@ -14,7 +14,11 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> getList(){
-        return productRepository.findAll();
+        List<Product> productList = productRepository.findAll();
+        if (productList.isEmpty()){
+            System.out.println("상품이 없습니다.");
+        }
+        return productList;
     }
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
