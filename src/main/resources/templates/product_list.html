@@ -79,6 +79,7 @@
         <td th:text="${product.filePath}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price} + '원'"></td>
+        <td> <a th:href="@{/detail/{id}(id=${product.id})}" class="btn btn-primary">상세보기</a> </td>
     </tr>
     </tbody>
 </table>
