@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>주문서 수정</h2>
+<h3>주소</h3>
+<form th:action="@{|/orders/modify/${order.id}|}" th:object="${order}" method="post">
+    <div>
+        <label for="address">주소</label>
+        <input type="text" th:field="*{address}" id="address" />
+    </div>
+    <div>
+        <label for="postCode">우편번호</label>
+        <input type="text" th:field="*{postCode}" id="postCode" />
+    </div>
+
+    <div th:each="productOrder, iter : ${order.productOrders}">
+        <h3>상품: <span th:text="${productOrder.product.name}"></span></h3>
+        <div>
+            <label for="productOrders[__${iter.index}__].amount">수량</label>
+            <select th:field="*{productOrders[__${iter.index}__].amount}" id="productOrders[__${iter.index}__].amount">
+                <option th:each="i : ${#numbers.sequence(1, 10)}"
+                        th:value="${i}"
+                        th:text="${i}"
+                        th:selected="${i == productOrder.amount}"></option>
+            </select>
+        </div>
+        <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" />
+    </div>
+    <button type="submit">수정 완료</button>
+</form>
+</body>
+</html>

@@ -38,8 +38,6 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProductOrder> productOrders;
 
-    private String address;
-
     private String postCode;
 
     private Integer totalPrice;
@@ -47,9 +45,11 @@ public class Order {
     @PrePersist
     @PreUpdate
     public void calculateTotalPrice() {
-        this.totalPrice = productOrders
-                .stream()
-                .mapToInt(productOrder -> productOrder.getProduct().getPrice() * productOrder.getAmount())
-                .sum();
+        if (productOrders != null) {
+            this.totalPrice = productOrders
+                    .stream()
+                    .mapToInt(productOrder -> productOrder.getProduct().getPrice() * productOrder.getAmount())
+                    .sum();
+        }
     }
 }
