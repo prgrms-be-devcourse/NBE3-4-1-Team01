@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByEmail(String email);
+    List<Order> findByStatus(int status);
+    List<Order> findByStatusAndEmail(int status, String email);
 }

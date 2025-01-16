@@ -26,4 +26,15 @@ public class OrderService {
     public void deleteById(long id) {
         orderRepository.deleteById(id);
     }
+
+    public List<Order> findByStatus(int status) {
+        return orderRepository.findByStatus(status);
+    }
+
+    public List<Order> findByStatusAndEmail(int status, String email) {
+        if (email.isBlank())
+            return this.findByStatus(status);
+        else
+            return orderRepository.findByStatusAndEmail(status, email);
+    }
 }
