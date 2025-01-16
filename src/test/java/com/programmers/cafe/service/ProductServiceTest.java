@@ -1,7 +1,12 @@
-
 package com.programmers.cafe.service;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import com.programmers.cafe.dto.ProductRequestDto;
+import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.entity.Product;
+import com.programmers.cafe.exception.DataNotFoundException;
 import com.programmers.cafe.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 

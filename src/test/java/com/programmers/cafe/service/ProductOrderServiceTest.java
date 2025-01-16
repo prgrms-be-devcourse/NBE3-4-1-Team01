@@ -1,10 +1,9 @@
-package com.programmers.cafe;
+package com.programmers.cafe.service;
 
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.repository.OrderRepository;
 import com.programmers.cafe.entity.ProductOrder;
-import com.programmers.cafe.service.ProductOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
