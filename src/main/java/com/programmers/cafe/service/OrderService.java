@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +38,15 @@ public class OrderService {
         }
 
         return orders;
+    }
+
+    public Order findById(long id) {
+        return orderRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("주문 항목을 찾을 수 없습니다."));
+    }
+
+    public void modifyOrders(Order order) {
+        orderRepository.save(order);
     }
 }

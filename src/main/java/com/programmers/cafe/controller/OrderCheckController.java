@@ -43,4 +43,19 @@ public class OrderCheckController {
         orderService.deleteById(id);
         return "redirect:/order";
     }
+
+    @GetMapping("/modify/{id}")
+    public String modify(@PathVariable long id, Model model) {
+        Order order = orderService.findById(id);
+        model.addAttribute("order", order);
+
+        return "order_modify";
+    }
+
+    @PostMapping("/modify/{id}")
+    public String modify(@ModelAttribute Order order) {
+        orderService.modifyOrders(order);
+
+        return "redirect:/order";
+    }
 }
