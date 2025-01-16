@@ -26,4 +26,7 @@ public class Product {
         this.price = price;
         this.filePath = filePath;
     }
+
+    public Product() {
+    }
 }
