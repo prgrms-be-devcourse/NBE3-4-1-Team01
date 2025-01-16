@@ -54,6 +54,7 @@ class ProductServiceTest {
         assertThat(responseDto.getPrice()).isEqualTo(20000);
         assertThat(responseDto.getFilePath()).isEqualTo("path/name.png");
     }
+
     @Test
     @DisplayName("id에 해당하는 상품이 존재하지 않는 경우 실패")
     public void update_product_not_exist() {
