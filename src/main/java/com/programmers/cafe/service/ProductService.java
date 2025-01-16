@@ -44,10 +44,12 @@ public class ProductService {
         return ProductResponseDto.of(product);
     }
 
-    public void deleteProduct(Long id) {
+    public ProductResponseDto deleteProduct(Long id) {
         Product product = productRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+        ProductResponseDto responseDto = ProductResponseDto.of(product);
 
         productRepository.delete(product);
+        return responseDto;
     }
 }

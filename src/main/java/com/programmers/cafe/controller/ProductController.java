@@ -30,8 +30,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.ok("삭제가 완료되었습니다.");
+    public ResponseEntity<ProductResponseDto> deleteProduct(@PathVariable Long id) {
+        ProductResponseDto responseDto = productService.deleteProduct(id);
+        return ResponseEntity.ok(responseDto);
     }
 }
