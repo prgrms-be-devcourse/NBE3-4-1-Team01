@@ -1,12 +1,7 @@
 package com.programmers.cafe.entity;
 
-import jakarta.persistence.*;
 import com.programmers.cafe.dto.ProductRequestDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,8 +29,7 @@ public class Product {
         this.filePath = filePath;
     }
 
-    public Product() {
-    public void update(ProductRequestDto requestDto) {
+    public void update (ProductRequestDto requestDto){
         this.name = requestDto.getName();
         this.price = requestDto.getPrice();
     }
