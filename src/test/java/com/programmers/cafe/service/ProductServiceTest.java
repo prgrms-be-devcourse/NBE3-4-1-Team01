@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,9 +25,39 @@ class ProductServiceTest {
     private ProductRepository productRepository;
     @InjectMocks
     private ProductService productService;
+    
     @BeforeEach
     void start(){
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    @DisplayName("상품 수정 성공")
+    public void update_product() {
+        // given
+        Product fakeProduct = new Product("브라질 원두", 5000, "path/name.jpg");
+        when(productRepository.findById(1L)).thenReturn(Optional.of(fakeProduct));
+
+        ProductRequestDto requestDto = new ProductRequestDto("new_name", 20000, "path/name.png");
+
+        // when
+        ProductResponseDto responseDto = productService.updateProduct(1L, requestDto);
+
+        // then
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getName()).isEqualTo("new_name");
+        assertThat(responseDto.getPrice()).isEqualTo(20000);
+        assertThat(responseDto.getFilePath()).isEqualTo("path/name.png");
+    }
+
+    @Test
+    @DisplayName("id에 해당하는 상품이 존재하지 않는 경우 실패")
+    public void update_product_not_exist() {
+        // given
+        ProductRequestDto requestDto = new ProductRequestDto("new_name", 20000, "path/name.png");
+
+        assertThrows(IllegalArgumentException.class,
+            () -> productService.updateProduct(1L, requestDto));
     }
 
     @Test
@@ -37,8 +68,10 @@ class ProductServiceTest {
         Product product2 = new Product("에티오피아 원두", 6000, "asd.jpg");
         List<Product> fakeList = Arrays.asList(product1, product2);
         when(productRepository.findAll()).thenReturn(fakeList);
+      
         //when
         List<Product> testList = productService.getList();
+      
         //then
         assertEquals(2,testList.size());
         assertThat(testList.get(0).getName()).isEqualTo(fakeList.get(0).getName());
@@ -58,5 +91,45 @@ class ProductServiceTest {
 
         //then
         assertThat(testproduct).isEqualTo(fakeProduct);
+    }
+
+    @Test
+    @DisplayName("예외 테스트")
+    void 개별_상품_조회_예외상황() {
+        //given
+        Product fakeProduct = new Product("브라질 원두", 5000, "qwe.jpg");
+        when(productRepository.findById(1L)).thenReturn(Optional.empty());
+
+        //when
+
+        //then
+        assertThrows(DataNotFoundException.class, () -> {
+            productService.getProduct(1L);
+        });
+    }
+
+    @Test
+    @DisplayName("상품 삭제 성공")
+    public void delete_product() {
+        // given
+        Product fakeProduct = new Product("브라질 원두", 5000, "path/name.jpg");
+        when(productRepository.findById(1L)).thenReturn(Optional.of(fakeProduct));
+
+        // when
+        ProductResponseDto responseDto = productService.deleteProduct(1L);
+
+        // then
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getName()).isEqualTo("브라질 원두");
+        assertThat(responseDto.getPrice()).isEqualTo(5000);
+        assertThat(responseDto.getFilePath()).isEqualTo("path/name.jpg");
+    }
+
+    @Test
+    @DisplayName("id에 해당하는 상품이 존재하지 않는 경우 실패")
+    public void delete_product_not_exist() {
+        // given
+        assertThrows(IllegalArgumentException.class,
+            () -> productService.deleteProduct(1L));
     }
 }

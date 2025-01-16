@@ -18,14 +18,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-
-    public ProductResponseDto updateProduct(Long id, ProductRequestDto requestDto) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
-
-        product.update(requestDto);
-        return ProductResponseDto.of(product);
-    }
+  
     @Transactional(readOnly = true)
     public List<Product> getList() {
         List<Product> productList = productRepository.findAll();
@@ -34,6 +27,7 @@ public class ProductService {
         }
         return productList;
     }
+  
     @Transactional(readOnly = true)
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
@@ -42,5 +36,22 @@ public class ProductService {
         } else {
             throw new DataNotFoundException("product not found");
         }
+    }
+
+    public ProductResponseDto updateProduct(Long id, ProductRequestDto requestDto) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+
+        product.update(requestDto);
+        return ProductResponseDto.of(product);
+    }
+
+    public ProductResponseDto deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+        ProductResponseDto responseDto = ProductResponseDto.of(product);
+
+        productRepository.delete(product);
+        return responseDto;
     }
 }

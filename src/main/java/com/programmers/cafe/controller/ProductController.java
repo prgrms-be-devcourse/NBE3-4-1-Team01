@@ -6,6 +6,7 @@ import com.programmers.cafe.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,12 @@ public class ProductController {
         @RequestBody @Valid ProductRequestDto requestDto
     ) {
         ProductResponseDto responseDto = productService.updateProduct(id, requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProductResponseDto> deleteProduct(@PathVariable Long id) {
+        ProductResponseDto responseDto = productService.deleteProduct(id);
         return ResponseEntity.ok(responseDto);
     }
 }
