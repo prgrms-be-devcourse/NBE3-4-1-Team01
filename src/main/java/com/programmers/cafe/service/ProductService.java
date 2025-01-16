@@ -3,6 +3,7 @@ package com.programmers.cafe.service;
 import com.programmers.cafe.dto.ProductRequestDto;
 import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.entity.Product;
+import com.programmers.cafe.exception.DataNotFoundException;
 import com.programmers.cafe.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
