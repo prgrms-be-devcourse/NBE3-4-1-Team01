@@ -16,13 +16,6 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Order> findByEmail(String email) {
-        if (email.isBlank())
-            return this.findAll();
-        else
-            return orderRepository.findByEmail(email);
-    }
-
     public void deleteById(long id) {
         orderRepository.deleteById(id);
     }

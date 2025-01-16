@@ -23,19 +23,6 @@ public class OrderCheckController {
         return "order_check";
     }
 
-    @GetMapping("/search-by-email")
-    public String searchByEmail(@RequestParam String email, Model model) {
-        // email이 비어있으면 최초 화면으로 리다이렉트
-        if (email == null || email.trim().isEmpty()) {
-            return "redirect:/order";
-        }
-
-        List<Order> orders = orderService.findByEmail(email);
-        model.addAttribute("orders", orders);
-        model.addAttribute("searchEmail", email); // 검색한 이메일 주소를 화면에 표시
-        return "order_check";
-    }
-
     @GetMapping("/filter")
     public String filter(@RequestParam int deliveryStatus, @RequestParam String email, Model model) { // 주문 필터
         List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email);
