@@ -1,5 +1,6 @@
 package com.programmers.cafe.entity;
 
+import jakarta.persistence.*;
 import com.programmers.cafe.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class Product {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -33,8 +34,10 @@ public class Product {
         this.filePath = filePath;
     }
 
+    public Product() {
     public void update(ProductRequestDto requestDto) {
         this.name = requestDto.getName();
         this.price = requestDto.getPrice();
     }
 }
+
