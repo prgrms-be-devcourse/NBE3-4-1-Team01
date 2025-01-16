@@ -5,7 +5,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cafeapp?serverTimezone=Asia/Seoul
     username: root
-    password: 0000
+    password: '0000'
+
   jpa:
     show-sql: true
     hibernate:

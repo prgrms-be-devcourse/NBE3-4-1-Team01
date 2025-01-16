@@ -1,0 +1,10 @@
+CREATE USER 'user1'@'%' IDENTIFIED BY 'password1';
+GRANT ALL PRIVILEGES ON *.* TO 'user1'@'%';
+
+CREATE USER 'user2'@'%' IDENTIFIED BY 'password2';
+GRANT ALL PRIVILEGES ON *.* TO 'user2'@'%';
+
+CREATE USER 'user3'@'%' IDENTIFIED BY 'password3';
+GRANT ALL PRIVILEGES ON *.* TO 'user3'@'%';
+
+FLUSH PRIVILEGES;
