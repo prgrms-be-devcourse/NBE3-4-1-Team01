@@ -7,7 +7,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +23,18 @@ public class ProductController {
     public String createProduct() {
         return "product_create";
     }
+
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute("productRequestDto") @Valid ProductRequestDto productRequestDto,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "product_create";
+        }
+
+        productService.create(productRequestDto);
+        return "redirect:/product"; // admin 페이지로 이동
+    }
+
 
 
     @PutMapping("/{id}")
