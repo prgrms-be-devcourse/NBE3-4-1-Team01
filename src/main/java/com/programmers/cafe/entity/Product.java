@@ -32,6 +32,7 @@ public class Product {
     public void update (ProductRequestDto requestDto){
         this.name = requestDto.getName();
         this.price = requestDto.getPrice();
+        this.filePath = requestDto.getFilePath();
     }
 }
 
