@@ -31,7 +31,7 @@ public class ProductService {
     }
     @Transactional(readOnly = true)
     public Page<Product> getList(int page) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 4);
         return productRepository.findAll(pageable);
     }
     @Transactional(readOnly = true)

@@ -72,18 +72,38 @@
     <title>Hello, world!</title>
 </head>
 <body>
-<table>
-    <thead>
-
-    </thead>
+<table class="table">
     <tbody>
-    <tr th:each="product : ${productList}" class="product">
-        <td th:text="${product.getId()}"></td>
-        <td th:text="${product.getFilePath()}"></td>
-        <td th:text="${product.getName()}"></td>
-        <td th:text="${product.getPrice()} + '원'"></td>
+    <tr th:each="product : ${productList.content}" class="product">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.filePath}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price} + '원'"></td>
     </tr>
     </tbody>
 </table>
+
+<!-- 페이징처리 시작 -->
+<div th:if="${!productList.isEmpty()}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${!productList.hasPrevious()} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${productList.number-1}|}">
+                <span>이전</span>
+            </a>
+        </li>
+        <li th:each="page : ${#numbers.sequence(0, productList.totalPages-1)}"
+            th:if="${page >= productList.number-5 and page <= productList.number+5}"
+            th:classappend="${page == productList.number} ? 'active'"
+            class="page-item">
+            <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${!productList.hasNext()} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${productList.number+1}|}">
+                <span>다음</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 페이징처리 끝 -->
 </body>
 </html>
