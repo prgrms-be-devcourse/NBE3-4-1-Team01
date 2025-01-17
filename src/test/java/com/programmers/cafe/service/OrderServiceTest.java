@@ -36,4 +36,18 @@ public class OrderServiceTest {
 
         orderRepository.saveAll(orders);
     }
+
+    @Test
+    @DisplayName("주문 전체 조회")
+    void t1() {
+        // given
+        int page = 0;
+
+        // when
+        List<Order> orders = orderService.findAllByPage(page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(5);
+    }
 }
