@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class ProductController {
 
     @GetMapping
     public String adminHome(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
-        Page<Product> productList = productService.getList(page);
+        List<Product> productList = this.productService.getList();
         model.addAttribute("productList", productList);
         return "admin_product";
     }
