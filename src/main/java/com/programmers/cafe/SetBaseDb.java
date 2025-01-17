@@ -1,7 +1,6 @@
 package com.programmers.cafe;
 
-import com.programmers.cafe.entity.Product;
-import com.programmers.cafe.repository.ProductRepository;
+import com.programmers.cafe.dto.ProductRequestDto;
 import com.programmers.cafe.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class SetBaseDb {
     private final ProductService productService;
-    private final ProductRepository productRepository;
     @Bean
     public String productSetting(){
         if(!productService.getList().isEmpty()){
@@ -20,13 +18,17 @@ public class SetBaseDb {
         return "상품이 준비되었습니다.";
     }
     public void setting(){
-        Product Columbia_Nariñó = new Product("Columbia_Nariñó", 5000, "ex1.jpg");
-        productRepository.save(Columbia_Nariñó);
-        Product Brazil_Serra_Do_Caparaó = new Product("Brazil_Serra_Do_Caparaó", 5000, "ex2.jpg");
-        productRepository.save(Brazil_Serra_Do_Caparaó);
-        Product Colombia_Quindio = new Product("Colombia_Quindio", 5000, "ex3.jpg");
-        productRepository.save(Colombia_Quindio);
-        Product Ethiopia_Sidamo = new Product("Ethiopia_Sidamo", 5000, "ex4.jpg");
-        productRepository.save(Ethiopia_Sidamo);
+        ProductRequestDto Columbia_Nariñó = new ProductRequestDto("Columbia_Nariñó", 5000, "ex1.jpg");
+        productService.create(Columbia_Nariñó);
+
+        ProductRequestDto Brazil_Serra_Do_Caparaó = new ProductRequestDto("Brazil_Serra_Do_Caparaó", 5000, "ex2.jpg");
+        productService.create(Brazil_Serra_Do_Caparaó);
+
+        ProductRequestDto Colombia_Quindio = new ProductRequestDto("Colombia_Quindio", 5000, "ex3.jpg");
+        productService.create(Colombia_Quindio);
+
+        ProductRequestDto Ethiopia_Sidamo = new ProductRequestDto("Ethiopia_Sidamo", 5000, "ex4.jpg");
+        productService.create(Ethiopia_Sidamo);
+
     }
 }
