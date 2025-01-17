@@ -1,5 +1,6 @@
 package com.programmers.cafe.controller;
 
+import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class OrderCheckController {
 
     @GetMapping
     public String check(Model model) { // 주문 목록 최초 화면
-        List<Order> orders = orderService.findAll();
+        List<OrderDto> orders = orderService.findAll();
         model.addAttribute("orders", orders);
 
         return "order_check";
@@ -25,7 +26,7 @@ public class OrderCheckController {
 
     @GetMapping("/filter")
     public String filter(@RequestParam int deliveryStatus, @RequestParam String email, Model model) { // 주문 필터
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email);
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email);
 
         if (orders == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
             return "redirect:/order";
@@ -46,15 +47,15 @@ public class OrderCheckController {
 
     @GetMapping("/modify/{id}")
     public String modify(@PathVariable long id, Model model) {
-        Order order = orderService.findById(id);
+        OrderDto order = orderService.findById(id);
         model.addAttribute("order", order);
 
         return "order_modify";
     }
 
     @PostMapping("/modify/{id}")
-    public String modify(@ModelAttribute Order order) {
-        orderService.modifyOrders(order);
+    public String modify(@ModelAttribute OrderDto order) {
+        orderService.modifyOrder(order);
 
         return "redirect:/order";
     }
