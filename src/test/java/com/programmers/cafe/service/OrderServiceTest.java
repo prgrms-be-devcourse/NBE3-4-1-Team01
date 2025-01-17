@@ -50,4 +50,36 @@ public class OrderServiceTest {
         assertThat(orders).isNotNull();
         assertThat(orders.size()).isEqualTo(5);
     }
+
+    @Test
+    @DisplayName("주문 필터 조회 - 배송 준비중")
+    void t2() {
+        // given
+        int deliveryStatus = 0;
+        String email = "";
+        int page = 0;
+
+        // when
+        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("주문 필터 조회 - 배송중")
+    void t3() {
+        // given
+        int deliveryStatus = 1;
+        String email = "";
+        int page = 0;
+
+        // when
+        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(2);
+    }
 }
