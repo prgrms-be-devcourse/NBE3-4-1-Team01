@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findByEmail(String email);
-    List<Order> findByStatus(int status);
-    List<Order> findByStatusAndEmail(int status, String email);
+    Page<Order> findByEmail(String email, Pageable pageable);
+    Page<Order> findByStatus(int status, Pageable pageable);
+    Page<Order> findByStatusAndEmail(int status, String email, Pageable pageable);
     Page<Order> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

@@ -18,7 +18,6 @@ public class OrderCheckController {
 
     @GetMapping
     public String check(Model model, @RequestParam(defaultValue = "0") int page) { // 주문 목록 최초 화면
-//        List<Order> orders = orderService.findAll();
         Page<Order> paging = orderService.findAllByPage(page);
         model.addAttribute("paging", paging);
 
@@ -26,14 +25,16 @@ public class OrderCheckController {
     }
 
     @GetMapping("/filter")
-    public String filter(@RequestParam int deliveryStatus, @RequestParam String email, Model model) { // 주문 필터
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email);
+    public String filter(@RequestParam(defaultValue = "2") int deliveryStatus,
+                         @RequestParam(defaultValue = "") String email,
+                         @RequestParam(defaultValue = "0") int page, Model model) { // 주문 필터
+        Page<Order> paging = orderService.getOrderByFilters(deliveryStatus, email, page);
 
-        if (orders == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
+        if (paging == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
             return "redirect:/order";
         }
 
-        model.addAttribute("orders", orders);
+        model.addAttribute("paging", paging);
         model.addAttribute("selectedStatus", deliveryStatus); // 선택한 상태를 화면에 표시
         model.addAttribute("searchEmail", email); // 검색한 이메일 주소를 화면에 표시
 
