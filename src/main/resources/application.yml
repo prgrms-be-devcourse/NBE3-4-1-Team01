@@ -6,11 +6,12 @@ spring:
     url: jdbc:mysql://localhost:3306/cafeapp?serverTimezone=Asia/Seoul
     username: root
     password: '0000'
+
   jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
+      show-sql: true
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
+        ddl-auto: update
+      properties:
+        hibernate:
+          format_sql: true
+          dialect: org.hibernate.dialect.MySQLDialect
