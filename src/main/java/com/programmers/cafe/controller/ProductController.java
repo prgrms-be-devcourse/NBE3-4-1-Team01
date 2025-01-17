@@ -2,9 +2,11 @@ package com.programmers.cafe.controller;
 
 import com.programmers.cafe.dto.ProductRequestDto;
 import com.programmers.cafe.dto.ProductResponseDto;
+import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,13 @@ import org.springframework.ui.Model;
 public class ProductController {
 
     private final ProductService productService;
+
+    @GetMapping
+    public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
+        Page<Product> productList = productService.getList(page);
+        model.addAttribute("productList", productList);
+        return "admin_product";
+    }
 
     @GetMapping("/create")
     public String createProduct() {
