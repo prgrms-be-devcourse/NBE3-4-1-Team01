@@ -3,6 +3,8 @@ package com.programmers.cafe.service;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,10 @@ public class OrderService {
 
     public List<Order> findAll() {
         return orderRepository.findAll();
+    }
+
+    public Page<Order> findAllByPage(int page) {
+        return orderRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(page, 10));
     }
 
     public void deleteById(long id) {

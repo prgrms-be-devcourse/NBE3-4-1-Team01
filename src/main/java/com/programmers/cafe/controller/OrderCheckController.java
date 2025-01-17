@@ -3,6 +3,7 @@ package com.programmers.cafe.controller;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,10 @@ public class OrderCheckController {
     private final OrderService orderService;
 
     @GetMapping
-    public String check(Model model) { // 주문 목록 최초 화면
-        List<Order> orders = orderService.findAll();
-        model.addAttribute("orders", orders);
+    public String check(Model model, @RequestParam(defaultValue = "0") int page) { // 주문 목록 최초 화면
+//        List<Order> orders = orderService.findAll();
+        Page<Order> paging = orderService.findAllByPage(page);
+        model.addAttribute("paging", paging);
 
         return "order_check";
     }
