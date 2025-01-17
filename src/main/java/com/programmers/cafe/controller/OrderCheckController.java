@@ -1,5 +1,6 @@
 package com.programmers.cafe.controller;
 
+import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class OrderCheckController {
 
     @GetMapping
     public String check(Model model, @RequestParam(defaultValue = "0") int page) { // 주문 목록 최초 화면
-        Page<Order> paging = orderService.findAllByPage(page);
+        Page<OrderDto> paging = orderService.findAllByPage(page);
         model.addAttribute("paging", paging);
 
         return "order_check";
@@ -28,7 +29,7 @@ public class OrderCheckController {
     public String filter(@RequestParam(defaultValue = "2") int deliveryStatus,
                          @RequestParam(defaultValue = "") String email,
                          @RequestParam(defaultValue = "0") int page, Model model) { // 주문 필터
-        Page<Order> paging = orderService.getOrderByFilters(deliveryStatus, email, page);
+        Page<OrderDto> paging = orderService.getOrderByFilters(deliveryStatus, email, page);
 
         if (paging == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
             return "redirect:/order";
@@ -49,15 +50,15 @@ public class OrderCheckController {
 
     @GetMapping("/modify/{id}")
     public String modify(@PathVariable long id, Model model) {
-        Order order = orderService.findById(id);
+        OrderDto order = orderService.findById(id);
         model.addAttribute("order", order);
 
         return "order_modify";
     }
 
     @PostMapping("/modify/{id}")
-    public String modify(@ModelAttribute Order order) {
-        orderService.modifyOrders(order);
+    public String modify(@ModelAttribute OrderDto order) {
+        orderService.modifyOrder(order);
 
         return "redirect:/order";
     }

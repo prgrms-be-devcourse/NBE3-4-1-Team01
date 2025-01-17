@@ -1,5 +1,6 @@
 package com.programmers.cafe.service;
 
+import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +51,7 @@ public class OrderServiceTest {
         // given
 
         // when
-        List<Order> orders = orderService.findAll();
+        List<OrderDto> orders = orderService.findAll();
 
         // then
         assertThat(orders).isNotNull();
@@ -66,7 +67,7 @@ public class OrderServiceTest {
         int page = 0;
 
         // when
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
 
         // then
         assertThat(orders).isNotNull();
@@ -82,7 +83,7 @@ public class OrderServiceTest {
         int page = 0;
 
         // when
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
 
         // then
         assertThat(orders).isNotNull();
@@ -98,7 +99,7 @@ public class OrderServiceTest {
         int page = 0;
 
         // when
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
 
         // then
         assertThat(orders).isNotNull();
@@ -112,7 +113,7 @@ public class OrderServiceTest {
         int page = 1; // 2페이지
 
         // when
-        List<Order> orders = orderService.findAllByPage(page).getContent();
+        List<OrderDto> orders = orderService.findAllByPage(page).getContent();
 
         // then
         assertThat(orders).isNotNull();
@@ -128,7 +129,7 @@ public class OrderServiceTest {
         String email = "";
 
         // when
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
 
         // then
         assertThat(orders).isNotNull();
@@ -144,7 +145,7 @@ public class OrderServiceTest {
         String email = "example01@example.com";
 
         // when
-        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+        List<OrderDto> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
 
         // then
         assertThat(orders).isNotNull();
