@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+    <h5 class="my-3 border-bottom pb-2">상품등록</h5>
+    <form th:action="@{/product/create}" method="post">
+        <!-- 상품 이름 -->
+        <div class="mb-3">
+            <label for="name" class="form-label">상품 이름</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="상품 이름을 입력하세요" required>
+        </div>
+
+        <!-- 가격 -->
+        <div class="mb-3">
+            <label for="price" class="form-label">가격</label>
+            <input type="number" name="price" id="price" class="form-control" placeholder="가격을 입력하세요" required>
+        </div>
+
+        <!-- 이미지 경로 -->
+        <div class="mb-3">
+            <label for="filePath" class="form-label">이미지 경로</label>
+            <input type="text" name="filePath" id="filePath" class="form-control" placeholder="이미지 경로를 입력하세요">
+        </div>
+
+        <!-- 제출 버튼 -->
+        <input type="submit" value="상품등록" class="btn btn-primary my-2">
+    </form>
+</div>
+</html>
