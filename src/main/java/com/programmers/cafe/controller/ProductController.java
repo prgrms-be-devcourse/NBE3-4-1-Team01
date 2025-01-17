@@ -46,18 +46,31 @@ public class ProductController {
         return "redirect:/product"; // admin 페이지로 이동
     }
 
-    @PutMapping("/{id}/edit")
-    public ResponseEntity<ProductResponseDto> updateProduct(
-        @PathVariable Long id,
-        @RequestBody @Valid ProductRequestDto requestDto
-    ) {
-        ProductResponseDto responseDto = productService.updateProduct(id, requestDto);
-        return ResponseEntity.ok(responseDto);
+    @GetMapping("/{id}/modify")
+    public String updateProduct(@PathVariable("id") Long id, Model model) {
+        Product product = productService.getProduct(id);
+        model.addAttribute("productId", product.getId());
+
+        ProductRequestDto requestDto = new ProductRequestDto();
+        requestDto.setName(product.getName());
+        requestDto.setPrice(product.getPrice());
+        requestDto.setFilePath(product.getFilePath());
+        model.addAttribute("product", requestDto);
+        return "product_modify";
     }
 
-    @DeleteMapping("/{id}/remove")
-    public ResponseEntity<ProductResponseDto> deleteProduct(@PathVariable Long id) {
-        ProductResponseDto responseDto = productService.deleteProduct(id);
-        return ResponseEntity.ok(responseDto);
+    @PostMapping("/{id}/modify")
+    public String updateProduct(
+        @PathVariable("id") Long id,
+        @Valid ProductRequestDto requestDto
+    ) {
+        productService.updateProduct(id, requestDto);
+        return "redirect:/product";  // admin 페이지로 redirect
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/product";  // admin 페이지로 redirect
     }
 }
