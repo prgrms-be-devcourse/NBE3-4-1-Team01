@@ -25,13 +25,20 @@ public class OrderServiceTest {
 
     @BeforeEach
     void initData() {
-        // 테스트 데이터
+        // 테스트 데이터: 12개
         List<Order> orders = List.of(
                 Order.builder().email("example01@example.com").address("대한민국").postalCode("12345").status(0).build(),
                 Order.builder().email("example01@example.com").address("대한민국").postalCode("00000").status(0).build(),
                 Order.builder().email("example02@example.com").address("대한민국").postalCode("00123").status(0).build(),
                 Order.builder().email("example03@example.com").address("대한민국").postalCode("12345").status(1).build(),
-                Order.builder().email("example03@example.com").address("대한민국").postalCode("56789").status(1).build()
+                Order.builder().email("example04@example.com").address("대한민국").postalCode("12345").status(0).build(),
+                Order.builder().email("example04@example.com").address("대한민국").postalCode("00000").status(0).build(),
+                Order.builder().email("example05@example.com").address("대한민국").postalCode("00123").status(0).build(),
+                Order.builder().email("example04@example.com").address("대한민국").postalCode("12345").status(0).build(),
+                Order.builder().email("example04@example.com").address("대한민국").postalCode("00000").status(0).build(),
+                Order.builder().email("example05@example.com").address("대한민국").postalCode("00123").status(0).build(),
+                Order.builder().email("example03@example.com").address("대한민국").postalCode("12345").status(1).build(),
+                Order.builder().email("example04@example.com").address("대한민국").postalCode("56789").status(1).build()
         );
 
         orderRepository.saveAll(orders);
@@ -41,14 +48,13 @@ public class OrderServiceTest {
     @DisplayName("주문 전체 조회")
     void t1() {
         // given
-        int page = 0;
 
         // when
-        List<Order> orders = orderService.findAllByPage(page).getContent();
+        List<Order> orders = orderService.findAll();
 
         // then
         assertThat(orders).isNotNull();
-        assertThat(orders.size()).isEqualTo(5);
+        assertThat(orders.size()).isEqualTo(12);
     }
 
     @Test
@@ -64,7 +70,7 @@ public class OrderServiceTest {
 
         // then
         assertThat(orders).isNotNull();
-        assertThat(orders.size()).isEqualTo(3);
+        assertThat(orders.size()).isEqualTo(9);
     }
 
     @Test
@@ -80,7 +86,7 @@ public class OrderServiceTest {
 
         // then
         assertThat(orders).isNotNull();
-        assertThat(orders.size()).isEqualTo(2);
+        assertThat(orders.size()).isEqualTo(3);
     }
 
     @Test
@@ -90,6 +96,52 @@ public class OrderServiceTest {
         int deliveryStatus = 2; // 모두
         String email = "example01@example.com";
         int page = 0;
+
+        // when
+        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("주문 전체 조회 - 페이징")
+    void t5() {
+        // given
+        int page = 1; // 2페이지
+
+        // when
+        List<Order> orders = orderService.findAllByPage(page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("주문 필터 조회 - 배송 여부, 페이징")
+    void t6() {
+        // given
+        int page = 0; // 1페이지
+        int deliveryStatus = 0; // 배송 준비중
+        String email = "";
+
+        // when
+        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("주문 필터 조회 - 이메일, 페이징")
+    void t7() {
+        // given
+        int page = 0; // 1페이지
+        int deliveryStatus = 2;
+        String email = "example01@example.com";
 
         // when
         List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();

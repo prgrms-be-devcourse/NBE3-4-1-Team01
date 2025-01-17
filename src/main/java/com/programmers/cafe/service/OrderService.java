@@ -16,6 +16,10 @@ import java.util.NoSuchElementException;
 public class OrderService {
     private final OrderRepository orderRepository;
 
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
     public Page<Order> findAllByPage(int page) {
         return orderRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(page, 10));
     }
