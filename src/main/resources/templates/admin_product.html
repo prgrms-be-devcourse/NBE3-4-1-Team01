@@ -15,11 +15,11 @@
 
         .card {
             margin: auto;
-            max-width: 950px;
-            width: 90%;
+            width: 100%; /* 카드가 화면 너비에 꽉 차게 */
             box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 1rem;
-            border: transparent
+            border: transparent;
+            padding: 20px; /* 카드 안쪽 여백 추가 */
         }
 
         .products {
@@ -28,6 +28,16 @@
 
         .products .price {
             line-height: 38px;
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-img {
+            width: 100px; /* 상품 이미지 크기 */
+            height: auto;
         }
     </style>
     <title>Admin Product Page</title>
@@ -38,13 +48,13 @@
 </div>
 <div class="card">
     <div class="row">
-        <div class="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
+        <div class="col-12 mt-4 d-flex flex-column align-items-start p-3 pt-0">
             <h5 class="flex-grow-0"><b>상품 목록</b></h5>
             <ul class="list-group products">
                 <!-- Thymeleaf로 데이터 바인딩 -->
-                <li class="list-group-item d-flex mt-3" th:each="product : ${productList}">
+                <li class="list-group-item mt-3" th:each="product : ${productList}">
                     <div class="col-2">
-                        <img class="img-fluid" th:src="@{/images/{filePath}(filePath=${product.filePath})}" alt="상품 이미지">
+                        <img class="product-img img-fluid" th:src="@{/images/{filePath}(filePath=${product.filePath})}" alt="상품 이미지">
                     </div>
                     <div class="col">
                         <div class="row text-muted">커피콩</div>
