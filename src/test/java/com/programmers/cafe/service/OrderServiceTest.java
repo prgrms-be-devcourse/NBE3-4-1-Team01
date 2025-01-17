@@ -82,4 +82,20 @@ public class OrderServiceTest {
         assertThat(orders).isNotNull();
         assertThat(orders.size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("주문 필터 조회 - 이메일")
+    void t4() {
+        // given
+        int deliveryStatus = 2; // 모두
+        String email = "example01@example.com";
+        int page = 0;
+
+        // when
+        List<Order> orders = orderService.getOrderByFilters(deliveryStatus, email, page).getContent();
+
+        // then
+        assertThat(orders).isNotNull();
+        assertThat(orders.size()).isEqualTo(2);
+    }
 }
