@@ -19,7 +19,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/product/create")
+    @GetMapping("/create")
     public String createProduct() {
         return "product_create";
     }
