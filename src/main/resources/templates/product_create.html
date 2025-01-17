@@ -1,26 +1,42 @@
-<!DOCTYPE html>
-    <h5 class="my-3 border-bottom pb-2">상품등록</h5>
-    <form th:action="@{/product/create}" method="post">
-        <!-- 상품 이름 -->
-        <div class="mb-3">
-            <label for="name" class="form-label">상품 이름</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="상품 이름을 입력하세요" required>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}" />
+<body>
+
+<div class="container">
+
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}" />
+
+    <form th:action="@{/product/create}" th:object="${product}" method="post">
+        <div class="form-group">
+            <label th:for="name">상품명</label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="상품명을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="price">가격</label>
+            <input type="number" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요">
         </div>
 
-        <!-- 가격 -->
-        <div class="mb-3">
-            <label for="price" class="form-label">가격</label>
-            <input type="number" name="price" id="price" class="form-control" placeholder="가격을 입력하세요" required>
+        <div class="form-group">
+            <label th:for="filePath">사진 선택</label>
+            <select th:field="*{filePath}" class="form-control">
+                <option value="/images/columbia.jpeg">Columbia Narino</option>
+            </select>
         </div>
 
-        <!-- 이미지 경로 -->
-        <div class="mb-3">
-            <label for="filePath" class="form-label">이미지 경로</label>
-            <input type="text" name="filePath" id="filePath" class="form-control" placeholder="이미지 경로를 입력하세요">
+        <!-- 디버깅용 출력 -->
+<!--        <p>FilePath: <span th:text="${product.filePath}"></span></p>-->
+
+        <!-- 선택된 사진 미리보기 -->
+        <div class="form-group">
+            <label>선택된 사진 미리보기</label>
+            <img th:src="@{${product.filePath}}" class="img-thumbnail" alt="사진 미리보기" style="max-width: 200px; max-height: 200px;">
         </div>
 
-        <!-- 제출 버튼 -->
-        <input type="submit" value="상품등록" class="btn btn-primary my-2">
+        <button type="submit" class="btn btn-primary">완료</button>
     </form>
-</div>
+
+</div> <!-- /container -->
+
+</body>
 </html>
