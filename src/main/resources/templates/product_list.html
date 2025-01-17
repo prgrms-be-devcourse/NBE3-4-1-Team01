@@ -70,12 +70,13 @@
                 <td th:text="${product.filePath}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.price} + '원'"></td>
-                <td> <a th:href="@{/detail/{id}(id=${product.id})}" class="btn btn-primary">상세보기</a> </td>
+                <td> <a th:href="@{/detail/{id}(id=${product.id})}" class="btn btn-primary">상세</a> </td>
                 <td>
                     <form th:action="@{/create/order/{id}(id=${product.id})}" method="post">
                         <input type="hidden" name="productId" th:value="${product.id}">
                         <input type="hidden" name="productName" th:value="${product.name}">
                         <input type="hidden" name="productPrice" th:value="${product.price}">
+                        <input type="number" class="form-control mb-2" name="quantity" placeholder="수량" min="1" required>
                         <button type="submit" class="btn btn-success">추가</button>
                     </form>
                 </td>
@@ -114,7 +115,7 @@
             </div>
             <div class="mb-3">
                 <label for="quantity" class="form-label">수량</label>
-                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="수량을 입력하세요">
+                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="수량을 입력하세요" min="1">
             </div>
             <button type="submit" class="btn btn-primary">주문하기</button>
         </form>

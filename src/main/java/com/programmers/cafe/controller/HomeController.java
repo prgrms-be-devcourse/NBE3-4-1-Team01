@@ -1,6 +1,7 @@
 package com.programmers.cafe.controller;
 
 import com.programmers.cafe.entity.Product;
+import com.programmers.cafe.service.ProductOrderService;
 import com.programmers.cafe.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -8,12 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
     private final ProductService productService;
+    private final ProductOrderService productOrderService;
 
     @GetMapping("/")
     public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
@@ -27,5 +30,11 @@ public class HomeController {
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
         return "product_detail";
+    }
+    @PostMapping("create/order/{id}")
+    public String home(@PathVariable("id")Long id, @RequestParam(value = "quantity")Integer amount){
+        Product product = productService.getProduct(id);
+        productOrderService.createProductOrder(product, amount);
+        return "redirect:/";
     }
 }
