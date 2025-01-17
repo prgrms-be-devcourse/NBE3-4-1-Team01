@@ -22,7 +22,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
+    public String adminHome(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
         Page<Product> productList = productService.getList(page);
         model.addAttribute("productList", productList);
         return "admin_product";
