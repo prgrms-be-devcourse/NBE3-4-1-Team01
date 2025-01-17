@@ -1,13 +1,10 @@
 package com.programmers.cafe.controller;
 
 import com.programmers.cafe.dto.ProductRequestDto;
-import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/admin/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -35,20 +32,20 @@ public class ProductController {
         ProductRequestDto requestDto = new ProductRequestDto();
         requestDto.setFilePath("/images/columbia.jpeg");  // 파일 경로 기본값 설정
         model.addAttribute("product", requestDto);
-        return "product_create";
+        return "admin_product_create";
     }
 
     @PostMapping("/create")
     public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "product_create";
+            return "admin_product_create";
         }
 
         productService.create(productRequestDto);
-        return "redirect:/product"; // admin 페이지로 이동
+        return "redirect:/admin/product"; // admin 페이지로 이동
     }
 
-    @GetMapping("/{id}/modify")
+    @GetMapping("/modify/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProduct(id);
         model.addAttribute("productId", product.getId());
@@ -58,21 +55,21 @@ public class ProductController {
         requestDto.setPrice(product.getPrice());
         requestDto.setFilePath(product.getFilePath());
         model.addAttribute("product", requestDto);
-        return "product_modify";
+        return "admin_product_modify";
     }
 
-    @PostMapping("/{id}/modify")
+    @PostMapping("/modify/{id}")
     public String updateProduct(
         @PathVariable("id") Long id,
         @Valid ProductRequestDto requestDto
     ) {
         productService.updateProduct(id, requestDto);
-        return "redirect:/product";  // admin 페이지로 redirect
+        return "redirect:/admin/product";  // admin 페이지로 redirect
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productService.deleteProduct(id);
-        return "redirect:/product";  // admin 페이지로 redirect
+        return "redirect:/admin/product";  // admin 페이지로 redirect
     }
 }
