@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/admin/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -45,10 +45,10 @@ public class ProductController {
         }
 
         productService.create(productRequestDto);
-        return "redirect:/product"; // admin 페이지로 이동
+        return "redirect:/admin/product"; // admin 페이지로 이동
     }
 
-    @GetMapping("/{id}/modify")
+    @GetMapping("/modify/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProduct(id);
         model.addAttribute("productId", product.getId());
@@ -61,18 +61,18 @@ public class ProductController {
         return "product_modify";
     }
 
-    @PostMapping("/{id}/modify")
+    @PostMapping("/modify/{id}")
     public String updateProduct(
         @PathVariable("id") Long id,
         @Valid ProductRequestDto requestDto
     ) {
         productService.updateProduct(id, requestDto);
-        return "redirect:/product";  // admin 페이지로 redirect
+        return "redirect:/admin/product";  // admin 페이지로 redirect
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productService.deleteProduct(id);
-        return "redirect:/product";  // admin 페이지로 redirect
+        return "redirect:/admin/product";  // admin 페이지로 redirect
     }
 }
