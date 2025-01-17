@@ -6,19 +6,36 @@ import com.programmers.cafe.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
-@RestController
+
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
 
     private final ProductService productService;
+
+    @GetMapping("/product/create")
+    public String createProduct() {
+        return "product_create";
+    }
+
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute("productRequestDto") @Valid ProductRequestDto productRequestDto,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "product_create";
+        }
+
+        productService.create(productRequestDto);
+        return "redirect:/product"; // admin 페이지로 이동
+    }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDto> updateProduct(

@@ -58,4 +58,13 @@ public class ProductService {
         productRepository.delete(product);
         return responseDto;
     }
+
+    public void create(ProductRequestDto productRequestDto) {
+        Product product = new Product();
+        product.setName(productRequestDto.getName());
+        product.setPrice(productRequestDto.getPrice());
+        product.setFilePath(productRequestDto.getFilePath());
+
+        productRepository.save(product);
+    }
 }
