@@ -29,13 +29,15 @@ public class ProductController {
     }
 
     @GetMapping("/create")
-    public String createProduct() {
+    public String createProduct(Model model) {
+        ProductRequestDto requestDto = new ProductRequestDto();
+        requestDto.setFilePath("/images/columbia.jpeg");  // 파일 경로 기본값 설정
+        model.addAttribute("product", requestDto);
         return "product_create";
     }
 
     @PostMapping("/create")
-    public String createProduct(@ModelAttribute("productRequestDto") @Valid ProductRequestDto productRequestDto,
-                                BindingResult bindingResult, Model model) {
+    public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "product_create";
         }
@@ -44,9 +46,7 @@ public class ProductController {
         return "redirect:/product"; // admin 페이지로 이동
     }
 
-
-
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/edit")
     public ResponseEntity<ProductResponseDto> updateProduct(
         @PathVariable Long id,
         @RequestBody @Valid ProductRequestDto requestDto
@@ -55,7 +55,7 @@ public class ProductController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/remove")
     public ResponseEntity<ProductResponseDto> deleteProduct(@PathVariable Long id) {
         ProductResponseDto responseDto = productService.deleteProduct(id);
         return ResponseEntity.ok(responseDto);
