@@ -54,8 +54,8 @@ public class OrderCheckController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modify(@ModelAttribute Order order) {
-        orderService.modifyOrders(order);
+    public String modify(@ModelAttribute OrderDto order) {
+        orderService.modifyOrder(order);
 
         return "redirect:/order";
     }

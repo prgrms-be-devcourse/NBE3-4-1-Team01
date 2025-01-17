@@ -1,8 +1,10 @@
 package com.programmers.cafe.service;
 
 import com.programmers.cafe.dto.OrderDto;
+import com.programmers.cafe.dto.ProductOrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.repository.OrderRepository;
+import com.programmers.cafe.repository.ProductOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ProductOrderRepository productOrderRepository;
 
     public List<OrderDto> findAll() {
         return orderRepository
@@ -54,7 +57,16 @@ public class OrderService {
         return new OrderDto(order);
     }
 
-    public void modifyOrders(Order order) {
+    public void modifyOrder(OrderDto orderDto) {
+        Order order = orderDto.toOrder();
         orderRepository.save(order);
+
+        List<ProductOrderDto> productOrderDtos = orderDto.getProductOrders();
+        productOrderDtos.forEach(productOrderDto -> {
+            productOrderRepository.updateAmount(
+                    productOrderDto.getId(),
+                    productOrderDto.getAmount()
+            );
+        });
     }
 }

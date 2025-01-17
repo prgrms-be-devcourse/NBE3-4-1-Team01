@@ -1,6 +1,7 @@
 package com.programmers.cafe.dto;
 
 import com.programmers.cafe.entity.Order;
+import com.programmers.cafe.entity.ProductOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,8 @@ public class OrderDto {
     private String address;
     private String postalCode;
     private int status;
-    private List<ProductOrderDto> productOrders;
     private Integer totalPrice;
+    private List<ProductOrderDto> productOrders;
 
     public OrderDto(Order order) {
         this.id = order.getId();
@@ -31,9 +32,22 @@ public class OrderDto {
         this.address = order.getAddress();
         this.postalCode = order.getPostalCode();
         this.totalPrice = order.getTotalPrice();
+        this.status = order.getStatus();
         this.productOrders = order.getProductOrders()
                 .stream()
                 .map(ProductOrderDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public Order toOrder() {
+        return Order.builder()
+                .id(this.id)
+                .email(this.email)
+                .createdAt(this.createdAt)
+                .address(this.address)
+                .postalCode(this.postalCode)
+                .status(this.status)
+                .totalPrice(this.totalPrice)
+                .build();
     }
 }

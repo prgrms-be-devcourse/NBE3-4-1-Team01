@@ -24,7 +24,7 @@
         <h3>상품 정보</h3>
         <div th:each="productOrder, iter : ${order.productOrders}">
             <div style="margin-bottom: 20px;">
-                <h4>상품: <span th:text="${productOrder.name}"></span></h4>
+                <h4>상품: <span th:text="${productOrder.productName}"></span></h4>
                 <div>
                     <label for="productOrders[__${iter.index}__].amount" style="font-weight: bold;">수량</label>
                     <select th:field="*{productOrders[__${iter.index}__].amount}" id="productOrders[__${iter.index}__].amount"
@@ -39,6 +39,7 @@
 
         <input type="hidden" th:field="*{email}" id="email" />
         <input type="hidden" th:field="*{createdAt}" id="createdAt" />
+        <input type="hidden" th:field="*{status}" id="status" />
 
         <button type="submit"
                 style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
