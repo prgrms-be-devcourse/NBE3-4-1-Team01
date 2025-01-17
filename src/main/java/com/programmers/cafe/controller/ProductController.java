@@ -1,13 +1,10 @@
 package com.programmers.cafe.controller;
 
 import com.programmers.cafe.dto.ProductRequestDto;
-import com.programmers.cafe.dto.ProductResponseDto;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -35,13 +32,13 @@ public class ProductController {
         ProductRequestDto requestDto = new ProductRequestDto();
         requestDto.setFilePath("/images/columbia.jpeg");  // 파일 경로 기본값 설정
         model.addAttribute("product", requestDto);
-        return "product_create";
+        return "admin_product_create";
     }
 
     @PostMapping("/create")
     public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "product_create";
+            return "admin_product_create";
         }
 
         productService.create(productRequestDto);
@@ -58,7 +55,7 @@ public class ProductController {
         requestDto.setPrice(product.getPrice());
         requestDto.setFilePath(product.getFilePath());
         model.addAttribute("product", requestDto);
-        return "product_modify";
+        return "admin_product_modify";
     }
 
     @PostMapping("/modify/{id}")
