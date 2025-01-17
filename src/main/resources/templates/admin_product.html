@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        body {
+            background: #ddd;
+        }
+
+        .card {
+            margin: auto;
+            width: 100%; /* 카드가 화면 너비에 꽉 차게 */
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 1rem;
+            border: transparent;
+            padding: 20px; /* 카드 안쪽 여백 추가 */
+        }
+
+        .products {
+            width: 100%;
+        }
+
+        .products .price {
+            line-height: 38px;
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-img {
+            width: 100px; /* 상품 이미지 크기 */
+            height: auto;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            width: 80px;
+            padding: 5px;
+        }
+
+        /* 상품 등록 버튼 위치 및 크기 조정 */
+        .add-product-btn {
+            width: auto; /* 버튼 크기 자동으로 조정 */
+            padding: 5px 10px; /* 수정, 삭제 버튼과 비슷한 크기 */
+        }
+
+        /* 상품 등록 버튼을 리스트 아래에 오른쪽 끝으로 배치 */
+        .add-product-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%; /* 전체 가로 너비 사용 */
+            margin-top: 20px; /* 위쪽 여백 */
+        }
+
+    </style>
+    <title>Admin Product Page</title>
+</head>
+<body class="container-fluid">
+<div class="row justify-content-center m-4">
+    <h1 class="text-center">Admin Page</h1>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-12 mt-4 d-flex flex-column align-items-start p-3 pt-0">
+            <h5 class="flex-grow-0"><b>상품 목록</b></h5>
+            <ul class="list-group products">
+                <!-- Thymeleaf로 데이터 바인딩 -->
+                <li class="list-group-item mt-3" th:each="product : ${productList}">
+                    <div class="col-2">
+                        <img class="product-img img-fluid" th:src="@{/images/{filePath}(filePath=${product.filePath})}" alt="상품 이미지">
+                    </div>
+                    <div class="col">
+                        <div class="row text-muted">커피콩</div>
+                        <div class="row" th:text="${product.name}">상품 이름</div>
+                    </div>
+                    <div class="col text-center price" th:text="${product.price + '원'}"></div>
+                    <div class="col text-end action-buttons">
+                        <!-- 버튼 색상 회색으로 변경 -->
+                        <button class="btn btn-secondary">수정</button>
+                        <button class="btn btn-secondary">삭제</button>
+                    </div>
+                </li>
+            </ul>
+            <!-- 상품 등록 버튼을 리스트 아래에 배치하고 오른쪽 정렬 -->
+            <div class="add-product-container">
+                <a th:href="@{/product/create}" class="btn btn-primary add-product-btn">상품 등록</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

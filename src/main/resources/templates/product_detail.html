@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        body {
+            background: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .card {
+            margin: auto;
+            max-width: 950px;
+            width: 90%;
+            box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 1rem;
+            border: transparent;
+        }
+
+        .row {
+            margin: 0;
+        }
+
+        .col-2,
+        .col {
+            padding: 0 1vh;
+        }
+
+        img {
+            width: 20rem;
+        }
+
+        hr {
+            margin-top: 1.25rem;
+        }
+
+        .products {
+            width: 150%;
+        }
+
+        .products .price,
+        .products .action {
+            line-height: 38px;
+        }
+
+        .products .action {
+            line-height: 38px;
+        }
+
+        /* 새로운 스타일 */
+        .product {
+            background-color: white;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 각 상품들의 칸 폭을 넓히고 높이를 조정하는 스타일 */
+        .product td {
+            width: 300px; /* 원하는 폭으로 조정 */
+            height: 200px; /* 원하는 높이로 조정 */
+        }
+
+        /* 테이블을 화면 가운데에 두는 스타일 */
+        table {
+            margin: 0 auto;
+        }
+
+        /* 텍스트 스타일 */
+        .product-file-path {
+            font-size: 300px;
+            font-weight: bold;
+            margin-bottom: 250px; /* 아래쪽에 간격 추가 */
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 15px; /* 아래쪽에 간격 추가 */
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: lighter;
+            margin-bottom: 10px; /* 아래쪽에 간격 추가 */
+        }
+    </style>
+    <title>Hello, world!</title>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${product.getFilePath()}" class="product-file-path"></h1>
+
+    <div th:text="${product.getName()}" class="product-name"></div>
+
+    <div th:text="${product.getPrice()} + '원'" class="product-price"></div>
+</div>
+</body>
+</html>
