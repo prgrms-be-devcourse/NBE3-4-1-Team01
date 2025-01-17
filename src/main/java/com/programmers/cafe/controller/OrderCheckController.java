@@ -62,4 +62,12 @@ public class OrderCheckController {
 
         return "redirect:/order";
     }
+
+    @GetMapping("/info/{id}")
+    public String info(@PathVariable long id, Model model) {
+        OrderDto order = orderService.findById(id);
+        model.addAttribute("order", order);
+
+        return "order_info";
+    }
 }

@@ -55,8 +55,10 @@
                 </tr>
                 </thead>
                 <tbody style="text-align: center; vertical-align: middle;">
-                <tr th:each="order, loop : ${paging}">
-                    <td th:text="${order.getId()}"></td>
+                <tr th:each="order, loop : ${paging}" th:onclick="">
+                    <td>
+                        <a th:href="@{|/order/info/${order.getId()}|}" th:text="${order.getId()}"></a>
+                    </td>
                     <td th:text="${#temporals.format(order.getCreatedAt(), 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
                     <td th:text="${order.getEmail()}"></td>
                     <td th:text="${order.getAddress()}"></td>
