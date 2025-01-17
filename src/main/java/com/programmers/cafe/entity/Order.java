@@ -35,7 +35,7 @@ public class Order {
 
     private int status; // 0: 주문완료, 1: 배송중
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
     private List<ProductOrder> productOrders;
 
     private Integer totalPrice;

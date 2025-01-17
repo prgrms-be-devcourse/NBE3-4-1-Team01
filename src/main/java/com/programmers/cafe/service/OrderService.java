@@ -3,10 +3,13 @@ package com.programmers.cafe.service;
 import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.dto.ProductOrderDto;
 import com.programmers.cafe.entity.Order;
+import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.repository.OrderRepository;
 import com.programmers.cafe.repository.ProductOrderRepository;
+import com.programmers.cafe.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductOrderRepository productOrderRepository;
+    private final ProductRepository productRepository;
 
     public List<OrderDto> findAll() {
         return orderRepository
@@ -57,16 +61,10 @@ public class OrderService {
         return new OrderDto(order);
     }
 
+    @Transactional
     public void modifyOrder(OrderDto orderDto) {
-        Order order = orderDto.toOrder();
+        List<Product> products = productRepository.findAll();
+        Order order = orderDto.toOrder(products);
         orderRepository.save(order);
-
-        List<ProductOrderDto> productOrderDtos = orderDto.getProductOrders();
-        productOrderDtos.forEach(productOrderDto -> {
-            productOrderRepository.updateAmount(
-                    productOrderDto.getId(),
-                    productOrderDto.getAmount()
-            );
-        });
     }
 }

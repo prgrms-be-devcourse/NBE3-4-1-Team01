@@ -33,7 +33,10 @@
                                 th:value="${i}" th:text="${i}" th:selected="${i == productOrder.amount}"></option>
                     </select>
                 </div>
-                <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" />
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].id}" id="productOrders[__${iter.index}__].id" />
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].productId}" id="productOrders[__${iter.index}__].productId" />
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].productName}" id="productOrders[__${iter.index}__].productName" />
+                <input type="hidden" th:field="*{productOrders[__${iter.index}__].price}" id="productOrders[__${iter.index}__].price" />
             </div>
         </div>
 
