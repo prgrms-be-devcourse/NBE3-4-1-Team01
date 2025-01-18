@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -49,5 +50,15 @@ public class Order {
                     .mapToInt(productOrder -> productOrder.getProduct().getPrice() * productOrder.getAmount())
                     .sum();
         }
+
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+
+        LocalTime cutoffTime = LocalTime.of(14, 0); // 2:00 PM
+        LocalTime orderTime = createdAt.toLocalTime();
+
+        // If order time is after 2 PM, status is set for next-day delivery
+        this.status = orderTime.isAfter(cutoffTime) ? 1 : 0;
     }
 }
