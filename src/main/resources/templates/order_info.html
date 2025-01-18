@@ -7,24 +7,39 @@
 <body>
 <div style="margin: 25px 20px;">
     <h2>주문서 정보</h2>
-    <form>
-        <div style="margin-bottom: 20px;">
-            <label for="address" style="font-weight: bold;">주소</label>
-            <input type="text" id="address" placeholder="주소를 입력하세요"
-                   style="width: auto; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <label for="postalCode" style="font-weight: bold;">우편번호</label>
-            <input type="text" id="postalCode" placeholder="우편번호를 입력하세요"
-                   style="width: auto; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
-        </div>
-
-        <button type="submit"
-                style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            확인
-        </button>
-    </form>
+    <div>
+        <h3>주문번호</h3>
+        <p th:text="${order.getId()}"></p>
+        <h3>이메일</h3>
+        <p th:text="${order.getEmail()}"></p>
+        <h3>주문일시</h3>
+        <p th:text="${#temporals.format(order.getCreatedAt(), 'yyyy년 MM월 dd일 HH:mm:ss')}"></p>
+        <h3>주소</h3>
+        <p th:text="${order.getAddress()}"></p>
+        <h3>우편번호</h3>
+        <p th:text="${order.getPostalCode()}"></p>
+        <h3>상태</h3>
+        <p th:text="${order.getStatus()}"></p>
+        <h3>주문내역</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>수량</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="info: ${order.getProductOrders()}">
+                <td th:text="${info.getProductName()}"></td>
+                <td th:text="${info.getPrice()}"></td>
+                <td th:text="${info.getAmount()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>주문금액</h3>
+        <p th:text="${order.getTotalPrice()}"></p>
+    </div>
 </div>
 </body>
 </html>
