@@ -27,7 +27,7 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     public Page<OrderDto> findAllByPage(int page) {
-        Page<Order> orders = orderRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(page, 10));
+        Page<Order> orders = orderRepository.findAll(PageRequest.of(page, 10));
 
         return orders.map(OrderDto::new);
     }
