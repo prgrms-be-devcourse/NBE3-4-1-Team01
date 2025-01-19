@@ -1,6 +1,7 @@
 package com.programmers.cafe.controller;
 
 import com.programmers.cafe.dto.OrderDto;
+import com.programmers.cafe.dto.OrderFilterDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -16,28 +17,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderCheckController {
     private final OrderService orderService;
+    private final OrderFilterDto filter;
 
     @GetMapping
-    public String check(Model model, @RequestParam(defaultValue = "0") int page) { // 주문 목록 최초 화면
+    public String check(@RequestParam(defaultValue = "0") int page, Model model) { // 주문 목록 최초 화면
         Page<OrderDto> paging = orderService.findAllByPage(page);
         model.addAttribute("paging", paging);
+        model.addAttribute("filter", filter);
 
         return "order_check";
     }
 
-    @GetMapping("/filter")
-    public String filter(@RequestParam(defaultValue = "2") int deliveryStatus,
-                         @RequestParam(defaultValue = "") String email,
+    @PostMapping("/filter")
+    public String filter(@ModelAttribute OrderFilterDto filter,
                          @RequestParam(defaultValue = "0") int page, Model model) { // 주문 필터
-        Page<OrderDto> paging = orderService.getOrderByFilters(deliveryStatus, email, page);
+        this.filter.setEmail(filter.getEmail());
+        this.filter.setDeliveryStatus(filter.getDeliveryStatus()); // 필터 설정
+
+        Page<OrderDto> paging = orderService.getOrderByFilters(filter, page);
 
         if (paging == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
             return "redirect:/order";
         }
-
         model.addAttribute("paging", paging);
-        model.addAttribute("selectedStatus", deliveryStatus); // 선택한 상태를 화면에 표시
-        model.addAttribute("searchEmail", email); // 검색한 이메일 주소를 화면에 표시
+        model.addAttribute("filter", this.filter);
 
         return "order_check";
     }

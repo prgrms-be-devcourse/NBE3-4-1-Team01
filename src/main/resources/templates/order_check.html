@@ -26,16 +26,16 @@
     <div class="card" style="box-shadow: 0 2px 6px; padding: 15px; border-radius: 20px; height: 780px;">
         <div class="card-body" style="height: 100%; overflow-y: auto;">
             <div style="margin-bottom: 20px;">
-                <form th:action="@{/order/filter}">
+                <form th:action="@{/order/filter}" method="post" th:object="${filter}">
                     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-right: 20px;">
                         <label for="deliveryStatus">배송 여부:</label>
-                        <select id="deliveryStatus" name="deliveryStatus">
-                            <option value="2" th:selected="${selectedStatus == 2}">모두</option>
-                            <option value="0" th:selected="${selectedStatus == 0}">배송준비중</option>
-                            <option value="1" th:selected="${selectedStatus == 1}">배송중</option>
+                        <select id="deliveryStatus" th:field="*{deliveryStatus}">
+                            <option value="2" th:selected="*{deliveryStatus == 2}">모두</option>
+                            <option value="0" th:selected="*{deliveryStatus == 0}">배송준비중</option>
+                            <option value="1" th:selected="*{deliveryStatus == 1}">배송중</option>
                         </select>
                         <!-- 이메일 검색 -->
-                        <input type="text" name="email" placeholder="이메일 검색" th:value="${searchEmail}" style="width: 220px;">
+                        <input type="text" name="email" placeholder="이메일 검색" th:field="*{email}" style="width: 220px;">
                         <!-- 검색 버튼 -->
                         <button type="submit">검색</button>
                     </div>

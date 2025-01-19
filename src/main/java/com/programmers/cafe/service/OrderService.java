@@ -1,6 +1,7 @@
 package com.programmers.cafe.service;
 
 import com.programmers.cafe.dto.OrderDto;
+import com.programmers.cafe.dto.OrderFilterDto;
 import com.programmers.cafe.dto.ProductOrderDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.entity.Product;
@@ -43,10 +44,12 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public Page<OrderDto> getOrderByFilters(int deliveryStatus, String email, int page) {
-        Page<Order> orders;
+    public Page<OrderDto> getOrderByFilters(OrderFilterDto filter, int page) {
         Pageable pageable = PageRequest.of(page, 10);
+        int deliveryStatus = filter.getDeliveryStatus();
+        String email = filter.getEmail();
 
+        Page<Order> orders;
         if (deliveryStatus == 2 && (email == null || email.isEmpty())) {
             return null;
         } else if (deliveryStatus == 2) {
