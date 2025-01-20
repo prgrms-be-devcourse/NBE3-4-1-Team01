@@ -130,7 +130,7 @@ public class OrderServiceTest {
 
         // then
         assertThat(orders).isNotNull();
-        assertThat(orders.size()).isEqualTo(2);
+        assertThat(orders.size()).isEqualTo(6);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class OrderServiceTest {
     void t6() {
         // given
         int page = 0; // 1페이지
-        filter.setDeliveryStatus(0);
+        filter.setDeliveryStatus(0); // 배송준비중
         filter.setEmail("");
 
         // when
@@ -146,7 +146,7 @@ public class OrderServiceTest {
 
         // then
         assertThat(orders).isNotNull();
-        assertThat(orders.size()).isEqualTo(9);
+        assertThat(orders.size()).isEqualTo(10);
     }
 
     @Test
@@ -154,7 +154,7 @@ public class OrderServiceTest {
     void t7() {
         // given
         int page = 0; // 1페이지
-        filter.setDeliveryStatus(2);
+        filter.setDeliveryStatus(1); // 배송중
         filter.setEmail("example01@example.com");
 
         // when
@@ -162,6 +162,6 @@ public class OrderServiceTest {
 
         // then
         assertThat(orders).isNotNull();
-        assertThat(orders.size()).isEqualTo(2);
+        assertThat(orders.size()).isEqualTo(1);
     }
 }
