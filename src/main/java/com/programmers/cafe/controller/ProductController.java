@@ -68,7 +68,7 @@ public class ProductController {
         return "redirect:/admin/product";  // admin 페이지로 redirect
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productService.deleteProduct(id);
         return "redirect:/admin/product";  // admin 페이지로 redirect
