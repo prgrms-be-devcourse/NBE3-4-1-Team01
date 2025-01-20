@@ -33,7 +33,7 @@ public class Order {
     @Column(length = 10)
     private String postalCode;
 
-    private int status; // 0: 주문완료, 1: 배송중
+    private int status; // 0: 주문완료(배송준비중), 1: 배송중
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
     private List<ProductOrder> productOrders;
