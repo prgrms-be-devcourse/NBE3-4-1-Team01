@@ -19,8 +19,12 @@
 
         <div class="form-group">
             <label th:for="filePath">사진 선택</label>
-            <select th:field="*{filePath}" class="form-control">
-                <option value="/images/columbia.jpeg">Columbia Narino</option>
+            <select id="filePathSelect" th:field="*{filePath}" class="form-control" onchange="updatePreview()">
+                <!-- 기본적으로 선택된 옵션을 'Columbia_Nariñó.jpeg'로 설정 -->
+                <option value="/images/Columbia_Nariñó.jpeg" th:selected="${product.filePath == '/images/Columbia_Nariñó.jpeg'}">Columbia_Nariñó</option>
+                <option value="/images/Brazil_Serra_Do_Caparaó.jpeg" th:selected="${product.filePath == '/images/Brazil_Serra_Do_Caparaó.jpeg'}">Brazil_Serra_Do_Caparaó</option>
+                <option value="/images/Colombia_Quindio.webp" th:selected="${product.filePath == '/images/Colombia_Quindio.webp'}">Colombia_Quindio</option>
+                <option value="/images/Ethiopia_Sidamo.jpg" th:selected="${product.filePath == '/images/Ethiopia_Sidamo.jpg'}">Ethiopia_Sidamo</option>
             </select>
         </div>
 
@@ -30,7 +34,7 @@
         <!-- 선택된 사진 미리보기 -->
         <div class="form-group">
             <label>선택된 사진 미리보기</label>
-            <img th:src="@{${product.filePath}}" class="img-thumbnail" alt="사진 미리보기" style="max-width: 200px; max-height: 200px;">
+            <img id="imagePreview" th:src="@{${product.filePath != null ? product.filePath : '/images/Columbia_Nariñó.jpeg'}}" class="img-thumbnail" alt="사진 미리보기" style="max-width: 200px; max-height: 200px;">
         </div>
 
         <button type="submit" class="btn btn-primary">완료</button>
@@ -40,3 +44,11 @@
 
 </body>
 </html>
+
+<script>
+    function updatePreview() {
+        const select = document.getElementById('filePathSelect');
+        const preview = document.getElementById('imagePreview');
+        preview.src = select.value; // 선택된 이미지 경로를 미리보기 이미지에 반영
+    }
+</script>

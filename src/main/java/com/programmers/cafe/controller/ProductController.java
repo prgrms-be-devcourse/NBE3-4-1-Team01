@@ -31,14 +31,15 @@ public class ProductController {
     @GetMapping("/create")
     public String createProduct(Model model) {
         ProductRequestDto requestDto = new ProductRequestDto();
-        requestDto.setFilePath("/images/columbia.jpeg");  // 파일 경로 기본값 설정
+        requestDto.setFilePath("/images/Columbia_Nariñó.jpeg");  // 파일 경로 기본값 설정
         model.addAttribute("product", requestDto);
         return "admin_product_create";
     }
 
     @PostMapping("/create")
-    public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult) {
+    public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("product", productRequestDto);
             return "admin_product_create";
         }
 
@@ -62,8 +63,15 @@ public class ProductController {
     @PostMapping("/modify/{id}")
     public String updateProduct(
         @PathVariable("id") Long id,
-        @Valid ProductRequestDto requestDto
+        @Valid ProductRequestDto requestDto,
+        BindingResult bindingResult,
+        Model model
     ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("product", requestDto);
+            return "admin_product_modify";
+        }
+
         productService.updateProduct(id, requestDto);
         return "redirect:/admin/product";  // admin 페이지로 redirect
     }
