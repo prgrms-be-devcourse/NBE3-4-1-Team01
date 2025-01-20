@@ -8,21 +8,34 @@
 </head>
 <body>
 
-<div style="margin: 25px 20px;">
-    <h1 style="margin-bottom: 25px;">주문 목록</h1>
+<style>
+    body {
+        background: #ddd;
+        margin: 25px 20px;
+    }
+    h1 {
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 4px rgba(0.5, 0.5, 0.5, 0.9);
+        color: #ffffff;
+        text-align: center;
+    }
+</style>
+
+<div>
+    <h1>주문 목록</h1>
     <div class="card" style="box-shadow: 0 2px 6px; padding: 15px; border-radius: 20px; height: 780px;">
         <div class="card-body" style="height: 100%; overflow-y: auto;">
             <div style="margin-bottom: 20px;">
-                <form th:action="@{/order/filter}">
+                <form th:action="@{/order/filter}" method="post" th:object="${filter}">
                     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-right: 20px;">
                         <label for="deliveryStatus">배송 여부:</label>
-                        <select id="deliveryStatus" name="deliveryStatus">
-                            <option value="2" th:selected="${selectedStatus == 2}">모두</option>
-                            <option value="0" th:selected="${selectedStatus == 0}">배송준비중</option>
-                            <option value="1" th:selected="${selectedStatus == 1}">배송중</option>
+                        <select id="deliveryStatus" th:field="*{deliveryStatus}">
+                            <option value="2" th:selected="*{deliveryStatus == 2}">모두</option>
+                            <option value="0" th:selected="*{deliveryStatus == 0}">배송준비중</option>
+                            <option value="1" th:selected="*{deliveryStatus == 1}">배송중</option>
                         </select>
                         <!-- 이메일 검색 -->
-                        <input type="text" name="email" placeholder="이메일 검색" th:value="${searchEmail}" style="width: 220px;">
+                        <input type="text" name="email" placeholder="이메일 검색" th:field="*{email}" style="width: 220px;">
                         <!-- 검색 버튼 -->
                         <button type="submit">검색</button>
                     </div>
@@ -42,8 +55,10 @@
                 </tr>
                 </thead>
                 <tbody style="text-align: center; vertical-align: middle;">
-                <tr th:each="order, loop : ${paging}">
-                    <td th:text="${order.getId()}"></td>
+                <tr th:each="order, loop : ${paging}" th:onclick="">
+                    <td>
+                        <a th:href="@{|/order/info/${order.getId()}|}" th:text="${order.getId()}"></a>
+                    </td>
                     <td th:text="${#temporals.format(order.getCreatedAt(), 'yyyy년 MM월 dd일 HH:mm:ss')}"></td>
                     <td th:text="${order.getEmail()}"></td>
                     <td th:text="${order.getAddress()}"></td>
@@ -54,7 +69,7 @@
 
                     <td>
                         <!-- 수정 버튼 (수정 페이지로 이동) -->
-                        <form th:action="@{|/order/edit/${order.getId()}|}" method="get" style="display:inline;">
+                        <form th:action="@{|/order/modify/${order.getId()}|}" method="get" style="display:inline;">
                             <button type="submit" class="btn btn-primary" style="margin-right: 10px;"
                                     th:onclick="|if (${order.getStatus()} == 1)
                         {alert('배송중인 주문은 수정할 수 없습니다.'); return false;} else {return true;}|">
