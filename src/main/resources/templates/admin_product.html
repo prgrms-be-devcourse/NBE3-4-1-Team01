@@ -93,7 +93,11 @@
                     <div class="col text-center price" th:text="${product.price + '원'}"></div>
                     <div class="col text-end action-buttons">
                         <!-- 수정 버튼 -->
-                        <a th:href="@{|/admin/product/modify/${product.id}|}" class="btn btn-secondary">수정</a>
+                        <form th:action="@{|/admin/product/modify/${product.id}|}" method="get" style="display:inline;">
+                            <button type="submit" class="btn btn-primary";>
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </form>
                         <!-- 삭제 버튼 -->
                         <form th:action="@{|/admin/product/delete/${product.id}|}" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-danger" onclick="return confirm('상품을 삭제하시겠습니까?');">
