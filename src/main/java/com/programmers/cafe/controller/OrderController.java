@@ -24,7 +24,7 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
 
         Order order = orderService.createOrder(orderRequestDto);
-        return new ResponseEntity<>(order, HttpStatus.CREATED); // 성공 시 201 Created 반환
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
 
     }
 }
