@@ -21,8 +21,10 @@
             <label th:for="filePath">사진 선택</label>
             <select id="filePathSelect" th:field="*{filePath}" class="form-control" onchange="updatePreview()">
                 <!-- 기본적으로 선택된 옵션을 'Columbia_Nariñó.jpeg'로 설정 -->
-                <option value="/images/Columbia_Nariñó.jpeg" th:selected="${product.filePath == '/images/Columbia_Nariñó.jpeg'}">Columbia Narino</option>
+                <option value="/images/Columbia_Nariñó.jpeg" th:selected="${product.filePath == '/images/Columbia_Nariñó.jpeg'}">Columbia_Nariñó</option>
                 <option value="/images/Brazil_Serra_Do_Caparaó.jpeg" th:selected="${product.filePath == '/images/Brazil_Serra_Do_Caparaó.jpeg'}">Brazil_Serra_Do_Caparaó</option>
+                <option value="/images/Colombia_Quindio.webp" th:selected="${product.filePath == '/images/Colombia_Quindio.webp'}">Colombia_Quindio</option>
+                <option value="/images/Ethiopia_Sidamo.jpg" th:selected="${product.filePath == '/images/Ethiopia_Sidamo.jpg'}">Ethiopia_Sidamo</option>
             </select>
         </div>
 

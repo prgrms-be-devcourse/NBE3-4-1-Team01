@@ -24,10 +24,10 @@ public class SetBaseDb {
         ProductRequestDto Brazil_Serra_Do_Caparaó = new ProductRequestDto("Brazil_Serra_Do_Caparaó", 5000, "/images/Brazil_Serra_Do_Caparaó.jpeg");
         productService.create(Brazil_Serra_Do_Caparaó);
 
-        ProductRequestDto Colombia_Quindio = new ProductRequestDto("Colombia_Quindio", 5000, "ex3.jpg");
+        ProductRequestDto Colombia_Quindio = new ProductRequestDto("Colombia_Quindio", 5000, "/images/Colombia_Quindio.webp");
         productService.create(Colombia_Quindio);
 
-        ProductRequestDto Ethiopia_Sidamo = new ProductRequestDto("Ethiopia_Sidamo", 5000, "ex4.jpg");
+        ProductRequestDto Ethiopia_Sidamo = new ProductRequestDto("Ethiopia_Sidamo", 5000, "/images/Ethiopia_Sidamo.jpg");
         productService.create(Ethiopia_Sidamo);
 
     }
