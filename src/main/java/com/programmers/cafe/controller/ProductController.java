@@ -37,8 +37,9 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult) {
+    public String createProduct(@Valid ProductRequestDto productRequestDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("product", productRequestDto);
             return "admin_product_create";
         }
 
@@ -62,8 +63,15 @@ public class ProductController {
     @PostMapping("/modify/{id}")
     public String updateProduct(
         @PathVariable("id") Long id,
-        @Valid ProductRequestDto requestDto
+        @Valid ProductRequestDto requestDto,
+        BindingResult bindingResult,
+        Model model
     ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("product", requestDto);
+            return "admin_product_modify";
+        }
+
         productService.updateProduct(id, requestDto);
         return "redirect:/admin/product";  // admin 페이지로 redirect
     }
