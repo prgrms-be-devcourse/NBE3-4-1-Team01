@@ -31,7 +31,7 @@ public class ProductController {
     @GetMapping("/create")
     public String createProduct(Model model) {
         ProductRequestDto requestDto = new ProductRequestDto();
-        requestDto.setFilePath("/images/columbia.jpeg");  // 파일 경로 기본값 설정
+        requestDto.setFilePath("/images/Columbia_Nariñó.jpeg");  // 파일 경로 기본값 설정
         model.addAttribute("product", requestDto);
         return "admin_product_create";
     }
