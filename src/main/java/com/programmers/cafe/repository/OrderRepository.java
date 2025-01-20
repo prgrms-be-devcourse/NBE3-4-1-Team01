@@ -13,5 +13,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findByEmail(String email, Pageable pageable);
     Page<Order> findByStatus(int status, Pageable pageable);
     Page<Order> findByStatusAndEmail(int status, String email, Pageable pageable);
-    Page<Order> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

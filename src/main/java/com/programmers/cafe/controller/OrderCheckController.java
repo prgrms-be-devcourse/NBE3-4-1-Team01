@@ -20,25 +20,22 @@ public class OrderCheckController {
     private final OrderFilterDto filter;
 
     @GetMapping
-    public String check(@RequestParam(defaultValue = "0") int page, Model model) { // 주문 목록 최초 화면
-        Page<OrderDto> paging = orderService.findAllByPage(page);
+    public String check(@RequestParam(defaultValue = "0") int page, Model model) { // 주문 조회
+        Page<OrderDto> paging = orderService.getOrderByFilters(filter, page);
         model.addAttribute("paging", paging);
         model.addAttribute("filter", filter);
 
         return "order_check";
     }
 
-    @PostMapping("/filter")
+    @PostMapping
     public String filter(@ModelAttribute OrderFilterDto filter,
                          @RequestParam(defaultValue = "0") int page, Model model) { // 주문 필터
         this.filter.setEmail(filter.getEmail());
         this.filter.setDeliveryStatus(filter.getDeliveryStatus()); // 필터 설정
 
-        Page<OrderDto> paging = orderService.getOrderByFilters(filter, page);
+        Page<OrderDto> paging = orderService.getOrderByFilters(this.filter, page);
 
-        if (paging == null) {  // "모두" 선택 및 이메일 비어있는 경우: 최초 화면 반환
-            return "redirect:/order";
-        }
         model.addAttribute("paging", paging);
         model.addAttribute("filter", this.filter);
 
