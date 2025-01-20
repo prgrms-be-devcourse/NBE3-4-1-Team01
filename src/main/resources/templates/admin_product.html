@@ -46,9 +46,10 @@
             gap: 10px;
         }
 
-        .action-buttons button {
-            width: 80px;
-            padding: 5px;
+        .action-buttons .btn {
+            width: 80px; /* 버튼의 가로 크기 */
+            padding: 5px; /* 내부 여백 */
+            text-align: center; /* 텍스트 정렬 */
         }
 
         .add-product-btn {
@@ -60,6 +61,10 @@
             display: flex;
             justify-content: flex-end;
             width: 100%;
+            margin-top: 20px;
+        }
+
+        .pagination-container {
             margin-top: 20px;
         }
     </style>
@@ -75,9 +80,10 @@
             <h5 class="flex-grow-0"><b>상품 목록</b></h5>
             <ul class="list-group products">
                 <!-- Thymeleaf로 데이터 바인딩 -->
-                <li class="list-group-item mt-3" th:each="product : ${productList}">
+                <li class="list-group-item mt-3" th:each="product : ${productList.content}">
                     <div class="col-2">
-                        <img class="product-img img-fluid" th:src="@{/images/{filePath}(filePath=${product.filePath})}" alt="상품 이미지">
+                        <!-- 이미지 출력 -->
+                        <img class="product-img img-fluid" th:src="@{'/images/' + ${product.filePath}}" alt="상품 이미지">
                     </div>
                     <div class="col">
                         <div class="row text-muted">커피콩</div>
@@ -88,14 +94,42 @@
                         <!-- 수정 버튼 -->
                         <a th:href="@{|/admin/product/modify/${product.id}|}" class="btn btn-secondary">수정</a>
                         <!-- 삭제 버튼 -->
-                        <a th:href="@{|/admin/product/delete/${product.id}|}" class="btn btn-secondary">삭제</a>
+                        <form th:action="@{|/admin/product/delete/${product.id}|}" style="margin: 0;">
+                            <button type="submit" class="btn btn-secondary" onclick="return confirm('상품을 삭제하시겠습니까?');">
+                                삭제
+                            </button>
+                        </form>
                     </div>
                 </li>
-            </ul>
+            </ul>git
 
             <!-- 상품 등록 버튼 -->
             <div class="add-product-container">
                 <a th:href="@{/admin/product/create}" class="btn btn-primary add-product-btn">상품 등록</a>
+            </div>
+
+            <!-- 페이징 -->
+            <div class="pagination-container" th:if="${!productList.isEmpty()}">
+                <ul class="pagination justify-content-center">
+                    <!-- 이전 페이지 버튼 -->
+                    <li class="page-item" th:classappend="${!productList.hasPrevious()} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${productList.number-1}|}">
+                            <span>이전</span>
+                        </a>
+                    </li>
+                    <!-- 페이지 번호 버튼 -->
+                    <li th:each="page : ${#numbers.sequence(0, productList.totalPages-1)}"
+                        th:if="${page >= productList.number-5 and page <= productList.number+5}"
+                        th:classappend="${page == productList.number} ? 'active'" class="page-item">
+                        <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                    </li>
+                    <!-- 다음 페이지 버튼 -->
+                    <li class="page-item" th:classappend="${!productList.hasNext()} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${productList.number+1}|}">
+                            <span>다음</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
