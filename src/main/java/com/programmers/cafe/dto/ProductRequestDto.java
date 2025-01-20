@@ -18,6 +18,5 @@ public class ProductRequestDto {
     @NotNull @PositiveOrZero
     private int price;
 
-    // TODO: 정적 파일(사진) 등록
      private String filePath;
 }
