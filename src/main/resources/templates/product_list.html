@@ -182,11 +182,35 @@
         });
     }
 
+    function validateForm() {
+        const email = document.getElementById("email").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const postalCode = document.getElementById("postalCode").value.trim();
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (email === "" || address === "" || postalCode === "") {
+            showAlert("모든 필드를 입력해 주세요.");
+            return false;
+        }
+
+        if (!emailPattern.test(email)) {
+            showAlert("유효한 이메일 주소를 입력해 주세요.");
+            return false;
+        }
+
+        return true;
+    }
+
     function createOrder() {
+        if (!validateForm()) {
+            return;
+        }
+
         const orderRequest = {
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
-            postalCode: document.getElementById("postalCode").value,
+            email: document.getElementById("email").value.trim(),
+            address: document.getElementById("address").value.trim(),
+            postalCode: document.getElementById("postalCode").value.trim(),
             productOrders: productOrders
         };
 

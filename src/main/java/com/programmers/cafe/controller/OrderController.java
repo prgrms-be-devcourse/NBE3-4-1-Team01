@@ -1,30 +1,31 @@
 package com.programmers.cafe.controller;
 
-import com.programmers.cafe.dto.OrderRequestDto;
-import com.programmers.cafe.entity.Order;
-import com.programmers.cafe.repository.OrderRepository;
-import com.programmers.cafe.service.OrderService;
+import com.programmers.cafe.dto.OrderRequest;
+import com.programmers.cafe.service.CreateOrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
+    private final CreateOrderService createOrderService;
 
     // 주문 생성 API (POST)
-    @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
+    @PostMapping("/create/order")
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
+        createOrderService.createOrder(orderRequest);
 
-        Order order = orderService.createOrder(orderRequestDto);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(UriComponentsBuilder.fromPath("/").build().toUri());
 
+        return new ResponseEntity<>("Order created successfully", headers, HttpStatus.FOUND);
     }
+
 }
