@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             background: #ddd;
@@ -48,7 +49,7 @@
         }
 
         .action-buttons .btn {
-            width: 80px; /* 버튼의 가로 크기 */
+            width: 50px; /* 버튼의 가로 크기 */
             padding: 5px; /* 내부 여백 */
             text-align: center; /* 텍스트 정렬 */
         }
@@ -96,11 +97,15 @@
                     <div class="col text-center price" th:text="${product.price + '원'}"></div>
                     <div class="col text-end action-buttons">
                         <!-- 수정 버튼 -->
-                        <a th:href="@{|/admin/product/modify/${product.id}|}" class="btn btn-secondary">수정</a>
+                        <form th:action="@{|/admin/product/modify/${product.id}|}" method="get" style="display:inline;">
+                            <button type="submit" class="btn btn-primary";>
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </form>
                         <!-- 삭제 버튼 -->
-                        <form th:action="@{|/admin/product/delete/${product.id}|}" style="margin: 0;">
-                            <button type="submit" class="btn btn-secondary"
-                                    onclick="return confirm('상품을 삭제하시겠습니까?');">삭제
+                        <form th:action="@{|/admin/product/delete/${product.id}|}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('상품을 삭제하시겠습니까?');">
+                                <i class="bi bi-trash"></i>
                             </button>
                         </form>
                     </div>
