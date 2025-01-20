@@ -3,6 +3,7 @@ package com.programmers.cafe.dto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.entity.ProductOrder;
+import com.programmers.cafe.global.DeliveryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class OrderDto {
     private LocalDateTime createdAt;
     private String address;
     private String postalCode;
-    private int status;
+    private DeliveryStatus status;
     private Integer totalPrice;
     private List<ProductOrderDto> productOrders;
 

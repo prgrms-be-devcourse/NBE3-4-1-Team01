@@ -1,5 +1,6 @@
 package com.programmers.cafe.entity;
 
+import com.programmers.cafe.global.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,7 +34,8 @@ public class Order {
     @Column(length = 10)
     private String postalCode;
 
-    private int status; // 0: 주문완료(배송준비중), 1: 배송중
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status; // 0: 주문완료(배송준비중), 1: 배송중
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
     private List<ProductOrder> productOrders;

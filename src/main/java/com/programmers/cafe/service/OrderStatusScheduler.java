@@ -1,6 +1,7 @@
 package com.programmers.cafe.service;
 
 import com.programmers.cafe.entity.Order;
+import com.programmers.cafe.global.DeliveryStatus;
 import com.programmers.cafe.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,12 +23,12 @@ public class OrderStatusScheduler {
         
         // 업데이트 할 status 조회
         List<Order> ordersToUpdate = orderRepository.findAll().stream()
-                .filter(order -> order.getStatus() == 0 && order.getCreatedAt().isBefore(cutoffDateTime))
+                .filter(order -> order.getStatus().getStatusCode() == 0 && order.getCreatedAt().isBefore(cutoffDateTime))
                 .toList(); // 상태가 0(주문완료)이고, 현재 시각이 14:00 이후인 주문을 조회
 
         // 상태 업데이트
         ordersToUpdate.forEach(order -> {
-            order.setStatus(1); // 배송중으로 변경
+            order.setStatus(DeliveryStatus.IN_DELIVERY); // 배송중으로 변경
             orderRepository.save(order);
         });
 
