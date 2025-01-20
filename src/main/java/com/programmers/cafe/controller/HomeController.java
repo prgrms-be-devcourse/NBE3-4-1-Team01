@@ -20,6 +20,11 @@ public class HomeController {
     private final ProductService productService;
     private final CreateOrderService createOrderService;
 
+    @GetMapping("/mainorder")
+    public String home() {
+        return "order_create";
+    }
+
     @GetMapping("/")
     public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
         Page<Product> productList = productService.getList(page);
