@@ -27,6 +27,8 @@ public class ProductOrder {
     @PreUpdate
     @PostPersist
     public void updateOrderTotalPrice() {
-        this.order.calculateTotalPrice();
+        if (order != null){
+            order.calculateTotalPrice();
+        }
     }
 }
