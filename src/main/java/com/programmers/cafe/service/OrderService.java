@@ -43,7 +43,7 @@ public class OrderService {
         // ProductOrder 생성 및 저장
         for (OrderRequestDto.OrderProductDto productDto : orderRequestDto.getProducts()) {
             Product product = productRepository.findById(productDto.getProductId())
-                    .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
 
             ProductOrder productOrder = new ProductOrder();
             productOrder.setProduct(product);
@@ -59,6 +59,7 @@ public class OrderService {
 
     public Page<OrderDto> findAllByPage(int page) {
         Page<Order> orders = orderRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(page, 10));
+
         return orders.map(OrderDto::new);
     }
 
