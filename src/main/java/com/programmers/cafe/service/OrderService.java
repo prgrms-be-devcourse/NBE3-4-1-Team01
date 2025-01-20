@@ -4,6 +4,8 @@ import com.programmers.cafe.dto.OrderDto;
 import com.programmers.cafe.dto.OrderFilterDto;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.entity.Product;
+import com.programmers.cafe.entity.ProductOrder;
+import com.programmers.cafe.global.DeliveryStatus;
 import com.programmers.cafe.repository.OrderRepository;
 import com.programmers.cafe.repository.ProductOrderRepository;
 import com.programmers.cafe.repository.ProductRepository;
@@ -46,13 +48,13 @@ public class OrderService {
 
     public Page<OrderDto> getOrderByFilters(OrderFilterDto filter, int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        int deliveryStatus = filter.getDeliveryStatus();
+        DeliveryStatus deliveryStatus = filter.getDeliveryStatus();
         String email = filter.getEmail();
 
         Page<Order> orders;
-        if (deliveryStatus == 2 && (email == null || email.isEmpty())) {
+        if (deliveryStatus == null && (email == null || email.isEmpty())) {
             orders = orderRepository.findAll(pageable);
-        } else if (deliveryStatus == 2) {
+        } else if (deliveryStatus == null) {
             // "모두" 선택 및 이메일 필터만 적용
             orders = orderRepository.findByEmail(email, pageable);
         } else if (email == null || email.isEmpty()) {
@@ -80,5 +82,4 @@ public class OrderService {
         Order order = orderDto.toOrder(products);
         orderRepository.save(order);
     }
-
 }

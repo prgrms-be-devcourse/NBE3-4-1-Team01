@@ -4,6 +4,7 @@ import com.programmers.cafe.dto.OrderRequest;
 import com.programmers.cafe.entity.Order;
 import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.entity.ProductOrder;
+import com.programmers.cafe.global.DeliveryStatus;
 import com.programmers.cafe.repository.OrderRepository;
 import com.programmers.cafe.repository.ProductOrderRepository;
 import com.programmers.cafe.repository.ProductRepository;
@@ -42,7 +43,7 @@ public class CreateOrderService {
                 .postalCode(orderRequest.getPostalCode())
                 .createdAt(LocalDateTime.now())
                 .productOrders(productOrders)
-                .status(0)
+                .status(DeliveryStatus.ORDER_COMPLETED)
                 .build();
         Order savedOrder = orderRepository.save(order);
 
