@@ -39,7 +39,7 @@
             <h4>우편번호</h4>
             <p th:text="${order.getPostalCode()}"></p>
             <h4>상태</h4>
-            <p th:text="${(order.getStatus() % 2 == 1) ? '배송중' : '배송준비중'}"></p>
+            <p th:text="${order.status.statusName}"></p>
             <h4>주문내역</h4>
             <table class="table table-bordered" style="text-align: center;">
                 <thead class="table table-info">
