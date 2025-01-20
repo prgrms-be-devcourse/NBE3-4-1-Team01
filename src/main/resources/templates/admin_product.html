@@ -46,9 +46,10 @@
             gap: 10px;
         }
 
-        .action-buttons button {
-            width: 80px;
-            padding: 5px;
+        .action-buttons .btn {
+            width: 80px; /* 버튼의 가로 크기 */
+            padding: 5px; /* 내부 여백 */
+            text-align: center; /* 텍스트 정렬 */
         }
 
         .add-product-btn {
@@ -88,7 +89,11 @@
                         <!-- 수정 버튼 -->
                         <a th:href="@{|/admin/product/modify/${product.id}|}" class="btn btn-secondary">수정</a>
                         <!-- 삭제 버튼 -->
-                        <a th:href="@{|/admin/product/delete/${product.id}|}" class="btn btn-secondary">삭제</a>
+                        <form th:action="@{|/admin/product/delete/${product.id}|}" style="margin: 0;">
+                            <button type="submit" class="btn btn-secondary" onclick="return confirm('상품을 삭제하시겠습니까?');">
+                                삭제
+                            </button>
+                        </form>
                     </div>
                 </li>
             </ul>
