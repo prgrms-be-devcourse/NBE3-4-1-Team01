@@ -21,18 +21,46 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-  
+
     @Transactional(readOnly = true)
     public Page<Product> getList(int page) {
         Pageable pageable = PageRequest.of(page, 4);
-        return productRepository.findAll(pageable);
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        if (productPage != null && productPage.getContent() != null) {
+            productPage.getContent().forEach(product -> {
+                if (product != null) {
+                    System.out.println("Product ID: " + product.getId());
+                } else {
+                    System.out.println("Product is null");
+                }
+            });
+        } else {
+            System.out.println("Product page or content is null");
+        }
+
+        return productPage;
     }
 
     @Transactional(readOnly = true)
     public List<Product> getList() {
-        return productRepository.findAll();
+        List<Product> products = productRepository.findAll();
+
+        if (products != null) {
+            products.forEach(product -> {
+                if (product != null) {
+                    System.out.println("Product ID: " + product.getId());
+                } else {
+                    System.out.println("Product is null");
+                }
+            });
+        } else {
+            System.out.println("Product list is null");
+        }
+
+        return products;
     }
-  
+
     @Transactional(readOnly = true)
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
@@ -45,7 +73,7 @@ public class ProductService {
 
     public ProductResponseDto updateProduct(Long id, ProductRequestDto requestDto) {
         Product product = productRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
 
         product.update(requestDto);
         return ProductResponseDto.of(product);
@@ -53,7 +81,7 @@ public class ProductService {
 
     public ProductResponseDto deleteProduct(Long id) {
         Product product = productRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
         ProductResponseDto responseDto = ProductResponseDto.of(product);
 
         productRepository.delete(product);

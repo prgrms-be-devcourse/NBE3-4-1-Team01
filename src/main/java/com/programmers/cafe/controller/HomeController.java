@@ -1,19 +1,24 @@
 package com.programmers.cafe.controller;
 
+import com.programmers.cafe.dto.OrderRequest;
 import com.programmers.cafe.entity.Product;
+import com.programmers.cafe.service.CreateOrderService;
 import com.programmers.cafe.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
     private final ProductService productService;
+    private final CreateOrderService createOrderService;
 
     @GetMapping("/mainorder")
     public String home() {
@@ -32,5 +37,14 @@ public class HomeController {
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
         return "product_detail";
+    }
+    @PostMapping("/create/order")
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
+        createOrderService.createOrder(orderRequest);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(UriComponentsBuilder.fromPath("/").build().toUri());
+
+        return new ResponseEntity<>("Order created successfully", headers, HttpStatus.FOUND);
     }
 }
