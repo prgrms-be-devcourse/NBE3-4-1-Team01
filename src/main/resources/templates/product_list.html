@@ -3,81 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제품 목록 및 주문 생성</title>
+    <title>CafeApp</title>
     <style>
         body {
-            display: flex;
-            justify-content: space-between;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #ddd;
+            color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
+
         .container {
-            width: 45%;
+            width: 100%;
+            max-width: 1200px;
             background-color: #fff;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.19);
+            border-radius: 1rem;
+            margin: 30px;
         }
+
         h1 {
             font-size: 24px;
             color: #333;
-            border-bottom: 2px solid #4CAF50;
+            border-bottom: 2px solid #212529;
             padding-bottom: 10px;
+            margin-bottom: 20px;
         }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .col-2 {
+            flex: 1;
+            min-width: 300px;
+            box-sizing: border-box;
+        }
+
+        .product-section, .order-summary-section {
+            margin-bottom: 30px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
-        table, th, td {
+
+        th, td {
+            padding: 12px;
+            text-align: left;
             border: 1px solid #ddd;
         }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
+
         th {
             background-color: #f8f8f8;
         }
-        .alert {
-            padding: 20px;
-            background-color: #4CAF50;
-            color: white;
-            margin-bottom: 15px;
-            border-radius: 4px;
+
+        td {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
         }
+
+        .product-img {
+            width: 100px;
+            height: auto;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
         .quantity-input {
-            width: 50px;
+            width: 60px;
+            padding: 6px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
         }
+
+        form input {
+            margin-bottom: 10px;
+            font-size: 14px;
+            padding: 10px;
+            width: 95%;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        form label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         form {
             display: flex;
             flex-direction: column;
-            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            overflow-y: auto;
         }
-        form label, form input, form button {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        form h2 {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #333;
-        }
+
         #orderList {
             list-style-type: none;
             padding: 0;
             margin-top: 10px;
         }
+
         #orderList li {
             margin-bottom: 5px;
         }
+
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .add-to-order-btn {
+            background-color: #212529;
+            color: white;
+            border: 1px solid #212529;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .add-to-order-btn:hover {
+            background-color: white;
+            color: #212529;
+        }
+
         .pagination {
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
+
         .pagination button {
             background-color: #f8f8f8;
             color: #333;
@@ -87,88 +160,114 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
         .pagination button:hover {
             background-color: #ddd;
         }
-        .pagination button.active {
-            background-color: #4CAF50;
-            color: white;
+
+        .cancel-btn, .payment-btn {
+            flex: 1;
+            text-align: center;
+            border: 1px solid #ffffff;
+            cursor: pointer;
+            padding: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        .payment-btn {
+            background-color: #212529;
+            color: #ffffff;
+        }
+
+        .cancel-btn {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+
+        .cancel-btn:hover, .payment-btn:hover {
+            background-color: #ddd;
+            color: #fff;
+        }
+
+        .cancel-btn {
+            border-right: 0;
+        }
+
+        .payment-btn {
+            border-left: 0;
+        }
+
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>제품 목록</h1>
-    <div id="alertContainer"></div>
-    <table>
-        <thead>
-        <tr>
-            <th>제품 ID</th>
-            <th>제품 이름</th>
-            <th>가격</th>
-            <th>파일 경로</th>
-            <th>수량</th>
-            <th>추가</th>
-        </tr>
-        </thead>
-        <tbody id="productTableBody">
-        <!-- Thymeleaf 문법을 사용하여 제품 목록을 동적으로 생성 -->
-        <tr th:each="product : ${productList}">
-            <td th:text="${product.id}">1</td>
-            <td th:text="${product.name}">Sample Product</td>
-            <td th:text="${product.price}">1000</td>
-            <td th:text="${product.filePath}">path/to/file</td>
-            <td><input type="number" class="quantity-input" th:data-id="${product.id}" th:data-name="${product.name}" min="1" value="1"></td>
-            <td><button type="button" th:data-id="${product.id}" th:data-name="${product.name}" class="add-to-order-btn">추가</button></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <!-- Thymeleaf 문법을 사용하여 페이지 번호를 동적으로 생성 -->
-        <button th:each="pageNum : ${#numbers.sequence(1, productList.totalPages)}" th:text="${pageNum}" th:classappend="${pageNum} == ${productList.number + 1} ? 'active'" th:onclick="'loadPage(' + ${pageNum - 1} + ')'">1</button>
+    <div class="row">
+        <div class="col-2 product-section">
+            <h1>상품 목록</h1>
+            <table>
+                <tbody id="productTableBody">
+                <tr th:each="product : ${productList}">
+                    <td><img class="product-img img-fluid" th:src="@{'/images/' + ${product.filePath}}" alt="상품 이미지"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td><input type="number" class="quantity-input" th:data-id="${product.id}" th:data-name="${product.name}" min="1" value="1"></td>
+                    <td><button type="button" th:data-id="${product.id}" th:data-name="${product.name}" class="add-to-order-btn">추가</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button th:each="pageNum : ${#numbers.sequence(1, productList.totalPages)}" th:text="${pageNum}" th:classappend="${pageNum} == ${productList.number + 1} ? 'active'" th:onclick="'loadPage(' + ${pageNum - 1} + ')'">1</button>
+            </div>
+        </div>
+
+        <div class="col-2 order-summary-section">
+            <h1>Summary</h1>
+            <ul id="orderList"></ul>
+            <form id="orderForm">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="address">주소</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="postalCode">우편번호</label>
+                <input type="text" id="postalCode" name="postalCode" required>
+
+                <p style="margin-top: 10px; color: #666; font-size: 18px;">
+                    당일 오후 2시 이후의 주문은 다음날 배송을 시작합니다.
+                </p>
+                <p style="margin-top: 10px; color: #333; font-size: 18px;">
+                    총 금액 : <span id="totalPrice">0</span> 원
+                </p>
+
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button type="button" class="payment-btn" onclick="createOrder()">결제하기</button>
+                    <button type="button" class="cancel-btn" onclick="cancelOrder()">주문취소</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div class="container">
-    <h1>주문 생성</h1>
-    <form id="orderForm">
-        <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="address">주소:</label>
-        <input type="text" id="address" name="address" required>
-
-        <label for="postalCode">우편번호:</label>
-        <input type="text" id="postalCode" name="postalCode" required>
-
-        <h2>주문 목록</h2>
-        <ul id="orderList"></ul>
-
-        <button type="button" onclick="createOrder()">주문 제출</button>
-    </form>
 </div>
 
 <script>
     let productOrders = [];
 
-    function showAlert(message) {
-        const alertContainer = document.getElementById("alertContainer");
-        const alert = document.createElement("div");
-        alert.className = "alert";
-        alert.innerText = message;
-        alertContainer.appendChild(alert);
-        setTimeout(() => {
-            alert.remove();
-        }, 3000);
-    }
-
     function addToOrder(productId, productName) {
         const quantityInput = document.querySelector(`input[data-id="${productId}"]`);
-        const amount = quantityInput.value;
-        if (amount != null && amount > 0) {
-            productOrders.push({ productId: parseInt(productId), productName: productName, amount: parseInt(amount) });
+        const amount = parseInt(quantityInput.value);
+        if (amount > 0) {
+            const existingOrder = productOrders.find(order => order.productId === productId);
+            if (existingOrder) {
+                existingOrder.amount += amount;
+            } else {
+                productOrders.push({ productId: productId, productName: productName, amount: amount });
+            }
             updateOrderList();
-            showAlert(productName + " 제품이 주문 목록에 추가되었습니다.");
+            updateTotalPrice();
+            quantityInput.value = 1;
         }
     }
 
@@ -177,11 +276,14 @@
         orderList.innerHTML = '';
         productOrders.forEach(order => {
             const listItem = document.createElement("li");
-            listItem.innerText = "제품 이름: " + order.productName + ", 수량: " + order.amount;
+            listItem.innerText = order.productName + " " + order.amount + "개";
             orderList.appendChild(listItem);
         });
     }
 
+    function showAlert(message) {
+        alert(message);
+    }
     function validateForm() {
         const email = document.getElementById("email").value.trim();
         const address = document.getElementById("address").value.trim();
@@ -207,6 +309,11 @@
             return;
         }
 
+        if (productOrders.length === 0) {
+            alert("상품을 1개 이상 담아주세요.");
+            return;
+        }
+
         const orderRequest = {
             email: document.getElementById("email").value.trim(),
             address: document.getElementById("address").value.trim(),
@@ -222,19 +329,27 @@
             body: JSON.stringify(orderRequest)
         })
             .then(response => response.text())
-            .then(message => {
-                alert(message);
+            .then(() => {
+                alert("주문이 완료되었습니다.");
+                document.getElementById("email").value = "";
+                document.getElementById("address").value = "";
+                document.getElementById("postalCode").value = "";
                 productOrders = [];
                 updateOrderList();
-                window.location.reload(); // 페이지를 새로 고침하여 초기화
+                window.location.reload();
             })
             .catch(error => {
                 console.error("주문 생성 중 오류 발생:", error);
             });
     }
 
-    function loadPage(page) {
-        window.location.href = "/?page=" + page;
+    function cancelOrder() {
+        if (confirm("주문 목록을 비우시겠습니까?")) {
+            productOrders = [];
+            updateOrderList();
+            updateTotalPrice();
+            alert("주문이 취소되었습니다.");
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -247,6 +362,16 @@
             });
         });
     });
+
+    function updateTotalPrice() {
+        const totalPrice = productOrders.reduce((sum, order) => {
+            const product = document.querySelector(`input[data-id="${order.productId}"]`);
+            const productPrice = parseInt(product.closest('tr').querySelector('td:nth-child(3)').innerText);
+            return sum + productPrice * order.amount;
+        }, 0);
+
+        document.getElementById("totalPrice").innerText = totalPrice.toLocaleString();
+    }
 </script>
 </body>
 </html>
