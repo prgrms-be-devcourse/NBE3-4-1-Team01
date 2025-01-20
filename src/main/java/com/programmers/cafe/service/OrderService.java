@@ -51,7 +51,7 @@ public class OrderService {
 
         Page<Order> orders;
         if (deliveryStatus == 2 && (email == null || email.isEmpty())) {
-            return null;
+            orders = orderRepository.findAll(pageable);
         } else if (deliveryStatus == 2) {
             // "모두" 선택 및 이메일 필터만 적용
             orders = orderRepository.findByEmail(email, pageable);
