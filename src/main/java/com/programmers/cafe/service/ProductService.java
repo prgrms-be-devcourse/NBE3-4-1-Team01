@@ -82,10 +82,9 @@ public class ProductService {
     public ProductResponseDto deleteProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
-        ProductResponseDto responseDto = ProductResponseDto.of(product);
 
-        productRepository.delete(product);
-        return responseDto;
+        product.remove();  // soft delete
+        return ProductResponseDto.of(product);
     }
 
     public void create(ProductRequestDto productRequestDto) {

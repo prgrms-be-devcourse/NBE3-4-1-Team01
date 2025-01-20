@@ -10,6 +10,7 @@ public class ProductResponseDto {
     private String name;
     private int price;
     private String filePath;
+    private Boolean removeFlag;
 
     public static ProductResponseDto of(Product product) {
         ProductResponseDto responseDto = new ProductResponseDto();
@@ -17,6 +18,7 @@ public class ProductResponseDto {
         responseDto.setName(product.getName());
         responseDto.setPrice(product.getPrice());
         responseDto.setFilePath(product.getFilePath());
+        responseDto.setRemoveFlag(product.getRemoveFlag());
 
         return responseDto;
     }

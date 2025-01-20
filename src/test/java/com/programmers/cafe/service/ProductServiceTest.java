@@ -18,11 +18,14 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+//@Transactional
+//@ActiveProfiles("test")
 class ProductServiceTest {
 
     @Mock
@@ -127,6 +130,7 @@ class ProductServiceTest {
         assertThat(responseDto.getName()).isEqualTo("브라질 원두");
         assertThat(responseDto.getPrice()).isEqualTo(5000);
         assertThat(responseDto.getFilePath()).isEqualTo("path/name.jpg");
+        assertThat(responseDto.getRemoveFlag()).isTrue();
     }
 
     @Test
