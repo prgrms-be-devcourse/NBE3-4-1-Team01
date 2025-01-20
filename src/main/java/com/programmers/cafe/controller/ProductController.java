@@ -5,6 +5,7 @@ import com.programmers.cafe.entity.Product;
 import com.programmers.cafe.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ProductController {
 
     @GetMapping
     public String adminHome(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
-        List<Product> productList = this.productService.getList();
+        Page<Product> productList = productService.getList(page);
         model.addAttribute("productList", productList);
         return "admin_product";
     }
